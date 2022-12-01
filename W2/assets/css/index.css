@@ -2,33 +2,57 @@ html {
   height: 100%;
 }
 
-body {
-  margin: 0;
+* {
   font-family: Arial;
   font-size: 16px;
+}
+
+body {
+  margin: 0;
   height: 100%;
   width: 100%;
 }
 
-.btn {
-  color: white;
-  padding: 8px 16px;
-  background-color: orange;
-  border-color: rgb(236, 236, 234);
+/* Form */
+.form-container {
+  background-color: white;
   border-radius: 8px;
-  font-size: 16px;
-  text-transform: uppercase;
+  text-align: center;
+  padding: 32px 48px;
 }
 
-.form-input {
-  font-size: 16px;
-  padding: 8px 8px;
-  background-color: rgb(238, 236, 236);
-  border-color: rgb(115, 115, 115);
+.form-container .form-heading {
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.form-container form {}
+
+form .form-input {
+  width: 280px;
+  background-color: rgb(240, 240, 240);
+  border-style: solid;
   border-radius: 8px;
+  border-color: rgb(232, 232, 232);
+  box-sizing: border-box;
+  padding: 8px 12px;
+  margin: 8px 0px;
   outline: none;
 }
 
+form .form-submit {
+  color: white;
+  background-color: orange;
+  border-radius: 8px;
+  border-style: solid;
+  border-color: rgb(232, 232, 232);
+  padding: 8px 16px;
+  margin: 12px 8px 0px 0px;
+  cursor: pointer;
+}
+
+/* Table */
 table {
   border-collapse: collapse;
   width: 100%;
@@ -36,7 +60,7 @@ table {
 
 td,
 th {
-  border: 1px solid #dddddd;
+  border: 2px solid #dddddd;
   text-align: left;
   padding: 8px;
 }

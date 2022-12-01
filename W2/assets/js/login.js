@@ -1,10 +1,12 @@
-const loginForm = $(".login-form-container .login-form");
+const loginForm = $(".login-form-container .form");
 
-if (!CheckAllElementReady(loginForm)) {
-  window.location.replace(inputPath);
+// Check All Element
+if (!CheckElements(loginForm)) {
+  window.location.replace(indexPath);
 }
 
-if (localStorage.getItem(userData.key) === userData.username) {
+//Check Login
+if (GetItem(userData.key) === userData.username) {
   window.location.replace(dashboardPath);
 }
 
@@ -15,13 +17,15 @@ loginForm.onsubmit = function (event) {
 
   if (username && password) {
     if (username === userData.username && password === userData.password) {
-      localStorage.setItem(userData.key, username);
+      SetItem(userData.key, username);
       window.location.replace(dashboardPath);
-      alert(loginAlert.success)
+      alert(loginAlert.success);
     } else {
       alert(loginAlert.wrong);
     }
   } else {
     alert(loginAlert.empty);
   }
+
+  ResetForm(loginForm);
 };

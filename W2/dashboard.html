@@ -12,60 +12,58 @@
 </head>
 
 <body>
-  <div class="container">
+  <div id="root">
     <div class="layout"></div>
     <div class="sidebar">
       <a href="#" class="system-logo">
-        <img src="./assets/images/computer-speaker.png" alt="system logo" class="system-logo-img">
-        <b class="system-name">Device Manager</b>
+        <img src="./assets/images/computer-speaker.png" alt="logo" class="system-logo-image">
+        <span class="system-name">Device Manager</span>
       </a>
       <ul class="tab-list">
         <li class="tab-item dashboard">
-          <img src="./assets/images/laptop-mobile.png" alt="dashboard" class="tab-item-img">
-          <b class="tab-item-name">Dashboard</b>
+          <img src="./assets/images/laptop-mobile.png" alt="dashboard" class="tab-item-icon">
+          <span class="tab-item-name">Dashboard</span>
         </li>
         <li class="tab-item logs">
-          <img src="./assets/images/clock-rotate-left.png" alt="logs" class="tab-item-img">
-          <b class="tab-item-name">Logs</b>
+          <img src="./assets/images/clock-rotate-left.png" alt="logs" class="tab-item-icon">
+          <span class="tab-item-name">Logs</span>
         </li>
         <li class="tab-item settings">
-          <img src="./assets/images/gear.png" alt="settings" class="tab-item-img">
-          <b class="tab-item-name">Settings</b>
+          <img src="./assets/images/gear.png" alt="settings" class="tab-item-icon">
+          <span class="tab-item-name">Settings</span>
         </li>
       </ul>
     </div>
     <div class="main">
       <div class="header">
-        <div class="sidebar-mobile-icon">
-          <img src="./assets/images/bars.png" alt="">
-        </div>
+        <img src="./assets/images/bars.png" alt="" class="sidebar-mobile-icon">
         <div class="user-info">
-          <img src="./assets/images/user.png" alt="user image" class="user-info-img">
-          <div class="user-info-greet">Welcome Hau</div>
-          <button type="button" class="btn logout-btn">Logout</button>
+          <img src="./assets/images/user.png" alt="user image" class="user-image">
+          <div class="user-greet">Welcome Hau</div>
+          <button type="button" class="logout-button">Logout</button>
         </div>
       </div>
 
-      <div class="content dashboard">
+      <div class="content dashboard active">
         <div class="table-container">
-          <table class="device-table">
+          <table>
             <tr>
-              <th>Company</th>
-              <th>Contact</th>
-              <th>Country</th>
-              <th>Country</th>
-              <th>Country</th>
+              <th>Devices</th>
+              <th>MAC Address</th>
+              <th>IP</th>
+              <th>Created Date</th>
+              <th>Power Consumption (Kw/H)</th>
             </tr>
             <tr>
-              <td>Alfreds Futterkiste</td>
-              <td>Maria Anders</td>
-              <td>Germany</td>
-              <td>Germany</td>
-              <td>Germany</td>
+              <td>TV</td>
+              <td>00:1B:44:11:3A:B7</td>
+              <td>127.0.0.2</td>
+              <td>2021-05-31</td>
+              <td>50</td>
             </tr>
             <tr>
-              <td>Total</td>
-              <td colspan="4">100</td>
+              <td colspan="4">Total</td>
+              <td>100</td>
             </tr>
             <tr>
               <td colspan="5">
@@ -81,10 +79,10 @@
           </table>
         </div>
 
-        <div class="component">
+        <div class="container">
           <div class="chart-container">
             <div class="pie-chart"></div>
-            <div class="legenda">
+            <div class="chart-explain">
               <div class="entry">
                 <div id="color-brown" class="entry-color"></div>
                 <div class="entry-text">Antarctica</div>
@@ -93,84 +91,62 @@
                 <div id="color-black" class="entry-color"></div>
                 <div class="entry-text">Australia</div>
               </div>
-              <div class="entry">
-                <div id="color-blue" class="entry-color"></div>
-                <div class="entry-text">South America</div>
-              </div>
-              <div class="entry">
-                <div id="color-green" class="entry-color"></div>
-                <div class="entry-text">North America</div>
-              </div>
-              <div class="entry">
-                <div id="color-yellow" class="entry-color"></div>
-                <div class="entry-text">Europe</div>
-              </div>
-              <div class="entry">
-                <div id="color-orange" class="entry-color"></div>
-                <div class="entry-text">Africa</div>
-              </div>
-              <div class="entry">
-                <div id="color-red" class="entry-color"></div>
-                <div class="entry-text">Asia</div>
-              </div>
             </div>
           </div>
-          <div class="add-device-form-container">
-            <form action="#" method="post" class="add-device-form">
-              <input type="text" name="name" id="" class="form-input" placeholder="Enter Device Name">
+          <div class="form-container add-device-form-container">
+            <form action="#" method="post">
+              <input type="text" name="name" class="form-input" placeholder="Enter Device Name">
               <br>
-              <input type="text" name="ip" id="" class="form-input" placeholder="Enter Device IP">
+              <input type="text" name="ip" class="form-input" placeholder="Enter Device IP">
               <br>
-              <input type="submit" value="Add Device" class="btn submit-btn">
+              <input type="submit" value="Add Device" class="form-submit">
             </form>
           </div>
         </div>
-
       </div>
 
       <div class="content logs">
         <div class="table-container">
           <div class="table-header">
             <h3 class="table-heading">Action Logs</h3>
+            <button type="button" class="refresh-button">Refresh</button>
             <div class="table-search">
-              <select name="action" id="" class="table-search-action">
+              <select name="action" id="" class="select-action">
                 <option value="All" selected="selected">All</option>
                 <option value="Turn On">Turn On</option>
                 <option value="Turn Off">Turn Off</option>
                 <option value="Sleep">Sleep</option>
               </select>
-              <form action="#" method="get" class="table-search-form">
+              <form action="#" method="get">
                 <input type="text" name="content" id="" class="form-input">
-                <input type="submit" value="Search" class="btn submit-btn">
+                <input type="submit" value="Search" class="form-submit">
               </form>
             </div>
           </div>
-          <table class="device-table">
+          <table>
             <tr>
-              <th>Company</th>
-              <th>Contact</th>
-              <th>Country</th>
-              <th>Country</th>
-              <th>Country</th>
+              <th>Device ID</th>
+              <th>Name</th>
+              <th>Action</th>
+              <th>Date</th>
+              <th>Power Consumption (Kw/H)</th>
             </tr>
             <tr>
-              <td>Alfreds Futterkiste</td>
-              <td>Maria Anders</td>
-              <td>Germany</td>
-              <td>Germany</td>
-              <td>Germany</td>
+              <td>8</td>
+              <td>TV</td>
+              <td>Turn On</td>
+              <td>2022-12-01</td>
+              <td>100</td>
             </tr>
             <tr>
-              <td>Total</td>
-              <td colspan="4">100</td>
+              <td colspan="4">Total</td>
+              <td>100</td>
             </tr>
           </table>
         </div>
       </div>
 
-      <div class="content settings">
-
-      </div>
+      <div class="content settings"></div>
     </div>
   </div>
   <script src="./assets/js/data.js" type="text/javascript"></script>

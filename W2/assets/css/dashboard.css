@@ -1,15 +1,20 @@
-.container {
+#root {
   height: 100%;
   display: flex;
 }
 
+.layout {
+  display: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
 .sidebar {
-  min-width: 220px;
-  border-right: 2px rgb(174, 174, 174) solid;
-  box-sizing: border-box;
-  display: block;
-  position: relative;
   background-color: white;
+  position: relative;
   z-index: 2;
 }
 
@@ -19,13 +24,19 @@
   display: flex;
   justify-content: left;
   align-items: center;
+  padding-right: 12px;
 }
 
-.system-logo .system-logo-img {
-  height: inherit;
+.system-logo .system-logo-image {
+  height: 100%;
 }
 
-.system-logo .system-name {}
+.system-logo .system-name {
+  font-size: 18px;
+  font-weight: bold;
+  overflow: hidden;
+  white-space: nowrap;
+}
 
 .sidebar .tab-list {
   list-style-type: none;
@@ -41,12 +52,17 @@
   cursor: pointer;
 }
 
+.tab-list .tab-item:hover {
+  background-color: rgb(232, 232, 232);
+}
+
 .tab-list .tab-item.active {
   color: blue;
 }
 
-.tab-list .tab-item .tab-item-img {
-  height: inherit;
+.tab-list .tab-item .tab-item-icon {
+  height: 100%;
+  margin-right: 8px;
 }
 
 .tab-list .tab-item .tab-item-name {}
@@ -61,17 +77,14 @@
   height: 60px;
   display: flex;
   justify-content: right;
+  align-items: center;
   padding: 0px 12px;
+  background-color: white;
 }
 
 .header .sidebar-mobile-icon {
   display: none;
-  height: inherit;
-  width: fit-content;
-}
-
-.header .sidebar-mobile-icon img {
-  height: inherit;
+  height: 68%;
 }
 
 .header .user-info {
@@ -81,17 +94,26 @@
   align-items: center;
 }
 
-.header .user-info .user-info-img {
-  height: inherit;
+.header .user-info .user-image {
+  height: 60%;
 }
 
-.header .user-info .user-info-greet {
+.header .user-info .user-greet {
   margin: 0px 12px 0px 8px;
+}
+
+.header .user-info .logout-button {
+  color: white;
+  background-color: orange;
+  border-style: solid;
+  border-radius: 8px;
+  border-color: rgb(232, 232, 232);
+  padding: 6px 16px;
 }
 
 .content {
   flex: 1;
-  padding: 80px 60px;
+  padding: 60px 60px 0px;
   background-color: rgb(230, 230, 230);
   display: flex;
   flex-direction: column;
@@ -107,29 +129,19 @@
   margin-bottom: 20px;
 }
 
-.content .component {
+.content .container {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 }
 
-.component .chart-container {
+.container .chart-container {
   background-color: white;
-  margin-bottom: 20px;
+  margin: 16px;
 }
 
-.component .add-device-form-container {
-  background-color: white;
-  text-align: center;
-  width: 320px;
-  padding: 40px 0px;
-}
-
-.component .add-device-form-container .add-device-form {}
-
-.add-device-form input[type=text],
-.add-device-form input[type=password] {
-  margin-bottom: 16px;
+.container .add-device-form-container {
+  margin: 16px;
 }
 
 .logs .table-container .table-header {
@@ -139,29 +151,41 @@
   padding: 0px 12px;
 }
 
+.table-container .table-header .refresh-button {
+  color: white;
+  background-color: rgb(81, 81, 255);
+  padding: 8px 16px;
+  border-color: rgb(232, 232, 232);
+  border-style: solid;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
 .table-container .table-header .table-search {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.table-header .table-search .table-search-action {
+.table-header .table-search .select-action {
   margin-right: 16px;
-  padding: 8px 12px;
+  padding: 4px 12px;
   font-size: 16px;
+  cursor: pointer;
 }
 
-.layout {
-  display: none;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1;
+.table-search form .form-input {
+  width: 200px;
+}
+
+@media screen and (min-width: 1092px) {
+  .layout {
+    display: none;
+  }
 }
 
 @media screen and (max-width: 1092px) {
-  .dashboard .component {
+  .dashboard .container {
     flex-direction: column;
     align-items: center;
   }
@@ -184,7 +208,7 @@
     display: none;
   }
 
-  .dashboard .component {
+  .dashboard .container {
     flex-direction: column;
     align-items: center;
   }

@@ -1,27 +1,32 @@
-let dashboardTable = $(".dashboard .table-container .device-table");
-let logsTable = $(".logs .table-container .device-table");
-let addDeviceForm = $(".dashboard .add-device-form-container .add-device-form");
-let logoutButton = $(".header .user-info .logout-btn");
-let searchForm = $(".logs .table-search .table-search-form");
-let userGreet = $(".user-info .user-info-greet");
-let contentItems = $$(".content");
-let tabItems = $$(".tab-item");
+let dashboardTable = $(".dashboard .table-container table");
+let logsTable = $(".logs .table-container table");
+let addDeviceForm = $(".add-device-form-container form");
+let logoutButton = $(".header .user-info .logout-button");
+let searchForm = $(".logs .table-search form");
+let userGreet = $(".user-info .user-greet");
+let tabs = $$(".tab-item");
+let contents = $$(".content");
 let chartContainer = $(".dashboard .chart-container");
-let sidebarMobileIcon = $(".sidebar-mobile-icon");
+let sidebarMobileIcon = $(".header .sidebar-mobile-icon");
 let sidebar = $(".sidebar");
 let layout = $(".layout");
-let searchAction = $(".table-header .table-search .table-search-action");
-let currentIndex = 0;
-localStorage.setItem(pageKey, 1);
+let searchAction = $(".table-header .table-search .select-action");
+let refreshButton = $(".table-header .refresh-button");
+let currentTabIndex = 0;
+let searchResult = [];
+let searchResultKey = "Search Result";
+SetItem(dashboardMetaData.pageKey, 1);
+SetItem(logsMetaData.pageKey, 1);
 
-// Common
-if (!CheckAllElementReady(dashboardTable, logsTable, addDeviceForm, logoutButton, searchForm, ...contentItems, ...tabItems, chartContainer)) {
-  window.location.replace(indexPath);
-}
-
-if (localStorage.getItem(userData.key) !== userData.username) {
+// Check Login
+if (GetItem(userData.key) !== userData.username) {
   localStorage.removeItem(userData.key);
   window.location.replace(loginPath);
+}
+
+// Common
+if (!CheckElements(dashboardTable, logsTable, addDeviceForm, logoutButton, searchForm, ...contents, ...tabs, chartContainer, sidebarMobileIcon, sidebar, layout, searchAction, refreshButton)) {
+  window.location.replace(indexPath);
 }
 
 userGreet.innerHTML = "Welcome " + userData.username.toCapitalize();
@@ -31,21 +36,24 @@ logoutButton.onclick = function (event) {
   window.location.replace(loginPath);
 };
 
-tabItems[currentIndex].classList.add("active");
-contentItems[currentIndex].classList.add("active");
+tabs[currentTabIndex].classList.add("active");
+contents[currentTabIndex].classList.add("active");
 
-tabItems.forEach(function (tabItem, index) {
+tabs.forEach(function (tabItem, index) {
   tabItem.onclick = function (event) {
-    contentItems[currentIndex].classList.remove("active");
-    tabItems[currentIndex].classList.remove("active");
-    contentItems[index].classList.add("active");
+    contents[currentTabIndex].classList.remove("active");
+    tabs[currentTabIndex].classList.remove("active");
+
+    contents[index].classList.add("active");
     this.classList.add("active");
-    currentIndex = index;
+    currentTabIndex = index;
 
     if (this.classList.contains("dashboard")) {
-      RenderTable(dashboardTable, dashboardData.tableFormat, currentDashboardData, itemPerPage);
+      SetItem(dashboardMetaData.pageKey, 1);
+      RenderTable(dashboardTable, dashboardData, dashboardMetaData);
     } else if (this.classList.contains("logs")) {
-      RenderTable(logsTable, logsData.tableFormat, currentLogsData, itemPerPage);
+      SetItem(logsMetaData.pageKey, 1);
+      RenderTable(logsTable, logsData, logsMetaData);
     }
 
     if (layout.style.display == "block") {
@@ -57,14 +65,14 @@ tabItems.forEach(function (tabItem, index) {
 });
 
 // Dashboard
-let currentDashboardData = localStorage.getItem(dashboardData.key);
+let currentDashboardData = GetItem(dashboardMetaData.dataKey);
 
-if (!currentDashboardData || !Array.isArray(currentDashboardData)) {
-  currentDashboardData = dashboardData.defaultData;
+if (currentDashboardData && Array.isArray(currentDashboardData)) {
+  dashboardData = currentDashboardData;
 }
 
-RenderTable(dashboardTable, dashboardData.tableFormat, currentDashboardData, itemPerPage);
-RenderPieChart(chartContainer, currentDashboardData);
+RenderTable(dashboardTable, dashboardData, dashboardMetaData);
+RenderPieChart(chartContainer, dashboardData);
 
 addDeviceForm.onsubmit = function (event) {
   event.preventDefault();
@@ -80,10 +88,12 @@ addDeviceForm.onsubmit = function (event) {
       powerConsumption: 50
     };
 
-    currentDashboardData.push(newDevice);
-    localStorage.setItem(dashboardData.key, currentDashboardData);
-    RenderTable(dashboardTable, dashboardData.tableFormat, currentDashboardData, itemPerPage);
-    RenderPieChart(chartContainer, currentDashboardData);
+    dashboardData.push(newDevice);
+    SetItem(dashboardMetaData.dataKey, dashboardData);
+    SetItem(dashboardMetaData.pageKey, 1);
+
+    RenderTable(dashboardTable, dashboardData, dashboardMetaData);
+    RenderPieChart(chartContainer, dashboardData);
   } else {
     alert("Name or ip address is empty");
   }
@@ -92,31 +102,30 @@ addDeviceForm.onsubmit = function (event) {
 };
 
 // Logs
-let currentLogsData = localStorage.getItem(logsData.key);
+let currentLogsData = GetItem(logsMetaData.dataKey);
 
-if (!currentLogsData || !Array.isArray(currentLogsData)) {
-  currentLogsData = logsData.defaultData;
+if (currentLogsData && Array.isArray(currentLogsData)) {
+  logsData = currentLogsData;
 }
 
-RenderTable(logsTable, logsData.tableFormat, currentLogsData, itemPerPage);
+RenderTable(logsTable, logsData, logsMetaData);
 
 searchForm.onsubmit = function (event) {
   event.preventDefault();
+  let content = this.content.value;
+  searchResult = GetItem(searchResultKey);
 
-  let content = this.content.value.toLowerCase();
-
-  if (content) {
-    let keys = Object.keys(logsData.tableFormat);
-    let resultSearch = currentLogsData.filter(function (item) {
-      return keys.some(function (key) {
-        console.log(item, key, item[key]);
-        return item[key].toString().toLowerCase().includes(content);
-      });
-    });
-
-    RenderTable(logsTable, logsData.tableFormat, resultSearch, itemPerPage);
+  if (!searchResult || !Array.isArray(searchResult)) {
+    searchResult = logsData;
   }
 
+  searchResult = searchResult.filter((item) => {
+    return item.name.toLowerCase().includes(content.toLowerCase());
+  });
+
+  SetItem(logsMetaData.pageKey, 1);
+  SetItem(searchResultKey, searchResult);
+  RenderTable(logsTable, searchResult, logsMetaData);
   ResetForm(this);
 };
 
@@ -125,28 +134,36 @@ sidebarMobileIcon.onclick = function (event) {
   sidebar.style.display = "block";
   this.style.display = "none";
   layout.style.display = "block";
-}
+};
 
 layout.onclick = function (event) {
   sidebar.style.display = "none";
   sidebarMobileIcon.style.display = "block";
   this.style.display = "none";
-}
+};
 
 // Search Logs
 searchAction.onchange = function (event) {
   let value = this.value;
-  let searchResult = []
+  searchResult = GetItem(searchResultKey);
 
-  if (value === "All") {
-    searchResult = currentLogsData;
-  } else {
-    searchResult = currentLogsData.filter(function (item) {
-      return item.action === value;
-    })
+  if (!searchResult || !Array.isArray(searchResult)) {
+    searchResult = logsData;
   }
 
-  RenderTable(logsTable, logsData.tableFormat, searchResult, itemPerPage);
-}
+  if (value !== "All") {
+    searchResult = searchResult.filter((item) => {
+      return item.action === value;
+    });
+  }
 
+  SetItem(logsMetaData.pageKey, 1);
+  SetItem(searchResultKey, searchResult);
+  RenderTable(logsTable, searchResult, logsMetaData);
+};
 
+refreshButton.onclick = function (event) {
+  localStorage.removeItem(searchResultKey);
+  SetItem(logsMetaData.pageKey, 1);
+  RenderTable(logsTable, logsData, logsMetaData);
+};
