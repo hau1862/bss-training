@@ -1,0 +1,193 @@
+.container {
+  height: 100%;
+  display: flex;
+}
+
+.sidebar {
+  min-width: 220px;
+  border-right: 2px rgb(174, 174, 174) solid;
+  box-sizing: border-box;
+  display: block;
+  position: relative;
+  background-color: white;
+  z-index: 2;
+}
+
+.sidebar .system-logo {
+  text-decoration: none;
+  height: 60px;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+
+.system-logo .system-logo-img {
+  height: inherit;
+}
+
+.system-logo .system-name {}
+
+.sidebar .tab-list {
+  list-style-type: none;
+  padding-left: 12px;
+}
+
+.tab-list .tab-item {
+  height: 40px;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  padding: 8px 0px;
+  cursor: pointer;
+}
+
+.tab-list .tab-item.active {
+  color: blue;
+}
+
+.tab-list .tab-item .tab-item-img {
+  height: inherit;
+}
+
+.tab-list .tab-item .tab-item-name {}
+
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  height: 60px;
+  display: flex;
+  justify-content: right;
+  padding: 0px 12px;
+}
+
+.header .sidebar-mobile-icon {
+  display: none;
+  height: inherit;
+  width: fit-content;
+}
+
+.header .sidebar-mobile-icon img {
+  height: inherit;
+}
+
+.header .user-info {
+  height: 100%;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+}
+
+.header .user-info .user-info-img {
+  height: inherit;
+}
+
+.header .user-info .user-info-greet {
+  margin: 0px 12px 0px 8px;
+}
+
+.content {
+  flex: 1;
+  padding: 80px 60px;
+  background-color: rgb(230, 230, 230);
+  display: flex;
+  flex-direction: column;
+  display: none;
+}
+
+.content.active {
+  display: flex;
+}
+
+.content .table-container {
+  background-color: white;
+  margin-bottom: 20px;
+}
+
+.content .component {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.component .chart-container {
+  background-color: white;
+  margin-bottom: 20px;
+}
+
+.component .add-device-form-container {
+  background-color: white;
+  text-align: center;
+  width: 320px;
+  padding: 40px 0px;
+}
+
+.component .add-device-form-container .add-device-form {}
+
+.add-device-form input[type=text],
+.add-device-form input[type=password] {
+  margin-bottom: 16px;
+}
+
+.logs .table-container .table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 12px;
+}
+
+.table-container .table-header .table-search {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.table-header .table-search .table-search-action {
+  margin-right: 16px;
+  padding: 8px 12px;
+  font-size: 16px;
+}
+
+.layout {
+  display: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+@media screen and (max-width: 1092px) {
+  .dashboard .component {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .header {
+    justify-content: space-between;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  .header .sidebar-mobile-icon {
+    display: block;
+  }
+
+  .content .table-container {
+    display: none;
+  }
+
+  .dashboard .component {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media screen and (max-width: 414px) {}

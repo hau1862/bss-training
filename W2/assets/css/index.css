@@ -1,0 +1,64 @@
+html {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Arial;
+  font-size: 16px;
+  height: 100%;
+  width: 100%;
+}
+
+.btn {
+  color: white;
+  padding: 8px 16px;
+  background-color: orange;
+  border-color: rgb(236, 236, 234);
+  border-radius: 8px;
+  font-size: 16px;
+  text-transform: uppercase;
+}
+
+.form-input {
+  font-size: 16px;
+  padding: 8px 8px;
+  background-color: rgb(238, 236, 236);
+  border-color: rgb(115, 115, 115);
+  border-radius: 8px;
+  outline: none;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td,
+th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+.pagination {
+  display: block;
+  text-align: center;
+}
+
+.pagination a {
+  color: black;
+  padding: 8px 16px;
+  text-decoration: none;
+  transition: background-color .3s;
+  border: 1px solid #ddd;
+  margin: 4px 4px;
+  display: inline-block;
+  width: fit-content
+}
+
+.pagination a.active {
+  background-color: #4CAF50;
+  color: white;
+  border: 1px solid #4CAF50;
+}
