@@ -1,15 +1,15 @@
 const $ = document.querySelector.bind(document);
 const $$ = document.querySelectorAll.bind(document);
 
+String.prototype.toCapitalize = function () {
+  return this.charAt(0).toUpperCase() + this.slice(1);
+};
+
 function CheckQueryElement(element) {
   return !!element;
 }
 
-function CheckQueryList(listElement = []) {
-  return listElement.length > 0;
-}
-
-function CheckReady(...elements) {
+function CheckAllElementReady(...elements) {
   return elements.every(CheckQueryElement) && elements.length > 0;
 }
 
@@ -38,29 +38,31 @@ function ResetForm(formElement) {
   }
 }
 
-function RenderTable(tableElement, tableFormat, data = []) {
-  let keys = Object.keys(tableFormat);
-  let values = Object.values(tableFormat);
+function RenderTable(tableElement, tableFormat, data = [], itemPerPage) {
+  let attributes = Object.keys(tableFormat);
+  let columnNames = Object.values(tableFormat);
   let length = data.length, i;
   let tableHeader = "";
   let tableContent = "";
   let tableFooter = "";
   let pageNumber = length % itemPerPage == 0 ? length / itemPerPage : parseInt(length / itemPerPage) + 1;
-  let sumPower = 0;
-  let currentPage = localStorage.getItem("Page") || 1;
+  let powerTotal = 0;
+  let currentPage = localStorage.getItem(pageKey) || 1;
   let listPage, nextPageButton, prevPageButton;
+  let beginIndex = (currentPage - 1) * itemPerPage;
+  let endIndex = Math.min((beginIndex + itemPerPage), length);
 
-  tableHeader = "<tr>" + values.map(function (columnName) {
+  tableHeader = "<tr>" + columnNames.map(function (columnName) {
     return "<th>" + columnName + "</th>";
   }).join("") + "</tr>";
 
-  let begin = (currentPage - 1) * itemPerPage;
-  let end = Math.min((begin + itemPerPage), length);
-  for (i = begin; i < end; i++) {
-    tableContent += "<tr>" + keys.map(function (key) {
+
+  for (i = beginIndex; i < endIndex; i++) {
+    tableContent += "<tr>" + attributes.map(function (key) {
       return "<td>" + data[i][key] + "</td>";
     }).join("") + "</tr>";
-    sumPower += Number(data[i].powerConsumption);
+
+    powerTotal += Number(data[i].powerConsumption);
   }
 
   for (i = 0; i < pageNumber; i++) {
@@ -69,7 +71,7 @@ function RenderTable(tableElement, tableFormat, data = []) {
 
   tableFooter = `<tr>
                     <td colspan="4">Total</td>
-                    <td>${sumPower}</td>
+                    <td>${powerTotal}</td>
                   </tr>
                   <tr>
                     <td colspan="5">
@@ -92,50 +94,41 @@ function RenderTable(tableElement, tableFormat, data = []) {
     item.onclick = function (event) {
       event.preventDefault();
       let pageIndex = parseInt(this.innerHTML);
-      localStorage.setItem("Page", pageIndex);
+      localStorage.setItem(pageKey, pageIndex);
       RenderTable(tableElement, tableFormat, data);
     }
   });
 
   prevPageButton.onclick = function (event) {
-    let pageIndex = localStorage.getItem("Page");
+    let pageIndex = localStorage.getItem(pageKey);
     let newIndex = Math.max(pageIndex - 1, 1);
     listPage[newIndex - 1].click();
   }
 
   nextPageButton.onclick = function (event) {
-    let pageIndex = localStorage.getItem("Page");
+    let pageIndex = localStorage.getItem(pageKey);
     let newIndex = Math.min(pageIndex + 1, pageNumber);
     listPage[newIndex - 1].click();
   }
 }
 
-String.prototype.toCapitalize = function () {
-  return this.charAt(0).toUpperCase() + this.slice(1);
-};
-
 function RenderPieChart(chartContainer, data = []) {
-  let listColor = ["brown", "black", "blue", "green", "yellow", "orange", "red"];
   let listDevice = data.map((item) => (item.device));
   let pieChart = chartContainer.querySelector(".pie-chart");
   let legenda = chartContainer.querySelector(".legenda");
   let backgroundColor = "";
-  let sumPower = data.reduce(function (accumulateValue, currentItem) {
+  let powerTotal = data.reduce(function (accumulateValue, currentItem) {
     return accumulateValue + currentItem.powerConsumption;
   }, 0);
 
   let powerPercentage = data.reduce(function (accumulate, currentItem) {
     let prev = accumulate[accumulate.length - 1];
-    return accumulate.concat(prev + currentItem.powerConsumption * 100 / sumPower);
+    return accumulate.concat(prev + currentItem.powerConsumption * 100 / powerTotal);
   }, [0]);
-
-  console.log(powerPercentage);
 
   backgroundColor = listDevice.map(function (item, index) {
     return `${listColor[index]} ${powerPercentage[index]}% ${powerPercentage[index + 1]}%`;
   }).join(", ");
-
-  console.log(backgroundColor);
 
   pieChart.style.setProperty("background", `conic-gradient(${backgroundColor})`);
 

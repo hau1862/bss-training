@@ -3,7 +3,7 @@ let logsTable = $(".logs .table-container .device-table");
 let addDeviceForm = $(".dashboard .add-device-form-container .add-device-form");
 let logoutButton = $(".header .user-info .logout-btn");
 let searchForm = $(".logs .table-search .table-search-form");
-let greetUser = $(".user-info .user-info-greet");
+let userGreet = $(".user-info .user-info-greet");
 let contentItems = $$(".content");
 let tabItems = $$(".tab-item");
 let chartContainer = $(".dashboard .chart-container");
@@ -12,9 +12,10 @@ let sidebar = $(".sidebar");
 let layout = $(".layout");
 let searchAction = $(".table-header .table-search .table-search-action");
 let currentIndex = 0;
-localStorage.setItem("Page", 1);
+localStorage.setItem(pageKey, 1);
+
 // Common
-if (!CheckReady(dashboardTable, logsTable, addDeviceForm, logoutButton, searchForm, ...contentItems, ...tabItems, chartContainer)) {
+if (!CheckAllElementReady(dashboardTable, logsTable, addDeviceForm, logoutButton, searchForm, ...contentItems, ...tabItems, chartContainer)) {
   window.location.replace(indexPath);
 }
 
@@ -23,7 +24,7 @@ if (localStorage.getItem(userData.key) !== userData.username) {
   window.location.replace(loginPath);
 }
 
-greetUser.innerHTML = "Welcome " + userData.username.toCapitalize();
+userGreet.innerHTML = "Welcome " + userData.username.toCapitalize();
 
 logoutButton.onclick = function (event) {
   localStorage.removeItem(userData.key);
@@ -42,11 +43,9 @@ tabItems.forEach(function (tabItem, index) {
     currentIndex = index;
 
     if (this.classList.contains("dashboard")) {
-      RenderTable(dashboardTable, dashboardTableFormat, dashboardCurrentData);
+      RenderTable(dashboardTable, dashboardData.tableFormat, currentDashboardData, itemPerPage);
     } else if (this.classList.contains("logs")) {
-      RenderTable(logsTable, logsTableFormat, logsCurrentData);
-    } else {
-
+      RenderTable(logsTable, logsData.tableFormat, currentLogsData, itemPerPage);
     }
 
     if (layout.style.display == "block") {
@@ -58,14 +57,14 @@ tabItems.forEach(function (tabItem, index) {
 });
 
 // Dashboard
-let dashboardCurrentData = localStorage.getItem(dashboardData.key);
+let currentDashboardData = localStorage.getItem(dashboardData.key);
 
-if (!dashboardCurrentData || !Array.isArray(dashboardCurrentData)) {
-  dashboardCurrentData = dashboardData.defaultData;
+if (!currentDashboardData || !Array.isArray(currentDashboardData)) {
+  currentDashboardData = dashboardData.defaultData;
 }
 
-RenderTable(dashboardTable, dashboardTableFormat, dashboardCurrentData);
-RenderPieChart(chartContainer, dashboardCurrentData);
+RenderTable(dashboardTable, dashboardData.tableFormat, currentDashboardData, itemPerPage);
+RenderPieChart(chartContainer, currentDashboardData);
 
 addDeviceForm.onsubmit = function (event) {
   event.preventDefault();
@@ -81,10 +80,10 @@ addDeviceForm.onsubmit = function (event) {
       powerConsumption: 50
     };
 
-    dashboardCurrentData.push(newDevice);
-    localStorage.setItem(dashboardData.key, dashboardCurrentData);
-    RenderTable(dashboardTable, dashboardTableFormat, dashboardCurrentData);
-    RenderPieChart(chartContainer, dashboardCurrentData);
+    currentDashboardData.push(newDevice);
+    localStorage.setItem(dashboardData.key, currentDashboardData);
+    RenderTable(dashboardTable, dashboardData.tableFormat, currentDashboardData, itemPerPage);
+    RenderPieChart(chartContainer, currentDashboardData);
   } else {
     alert("Name or ip address is empty");
   }
@@ -93,13 +92,13 @@ addDeviceForm.onsubmit = function (event) {
 };
 
 // Logs
-let logsCurrentData = localStorage.getItem(logsData.key);
+let currentLogsData = localStorage.getItem(logsData.key);
 
-if (!logsCurrentData || !Array.isArray(logsCurrentData)) {
-  logsCurrentData = logsData.defaultData;
+if (!currentLogsData || !Array.isArray(currentLogsData)) {
+  currentLogsData = logsData.defaultData;
 }
 
-RenderTable(logsTable, logsTableFormat, logsCurrentData);
+RenderTable(logsTable, logsData.tableFormat, currentLogsData, itemPerPage);
 
 searchForm.onsubmit = function (event) {
   event.preventDefault();
@@ -107,15 +106,15 @@ searchForm.onsubmit = function (event) {
   let content = this.content.value.toLowerCase();
 
   if (content) {
-    let keys = Object.keys(logsTableFormat);
-    let resultSearch = logsCurrentData.filter(function (item) {
+    let keys = Object.keys(logsData.tableFormat);
+    let resultSearch = currentLogsData.filter(function (item) {
       return keys.some(function (key) {
         console.log(item, key, item[key]);
         return item[key].toString().toLowerCase().includes(content);
       });
     });
 
-    RenderTable(logsTable, logsTableFormat, resultSearch);
+    RenderTable(logsTable, logsData.tableFormat, resultSearch, itemPerPage);
   }
 
   ResetForm(this);
@@ -135,15 +134,19 @@ layout.onclick = function (event) {
 }
 
 // Search Logs
-
 searchAction.onchange = function (event) {
-  let action = this.value;
+  let value = this.value;
+  let searchResult = []
 
-  let searchResult = logsCurrentData.filter(function (item) {
-    return item.action === action;
-  })
+  if (value === "All") {
+    searchResult = currentLogsData;
+  } else {
+    searchResult = currentLogsData.filter(function (item) {
+      return item.action === value;
+    })
+  }
 
-  RenderTable(logsTable, logsTableFormat, searchResult);
+  RenderTable(logsTable, logsData.tableFormat, searchResult, itemPerPage);
 }
 
 

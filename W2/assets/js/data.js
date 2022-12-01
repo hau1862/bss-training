@@ -8,6 +8,16 @@ const userData = {
   key: "username"
 };
 
+const itemPerPage = 5;
+const pageKey = "Page";
+const loginAlert = {
+  success: "Login Success",
+  wrong: "Username or password is wrong",
+  empty: "Username or password is empty"
+};
+
+let listColor = ["brown", "black", "blue", "green", "yellow", "orange", "red"];
+
 const dashboardData = {
   defaultData: [
     {
@@ -53,7 +63,14 @@ const dashboardData = {
       powerConsumption: 75
     }
   ],
-  key: "Dashboard Data"
+  key: "Dashboard Data",
+  tableFormat: {
+    device: "Devices",
+    macAddress: "MAC Address",
+    ip: "IP",
+    createdDate: "Created Date",
+    powerConsumption: "Power Consumption (Kw/H)"
+  }
 };
 
 const dashboardTableFormat = {
@@ -82,21 +99,21 @@ const logsData = {
     {
       deviceId: "2",
       name: "TV",
-      action: action.on,
+      action: action.off,
       date: "2022-12-04",
       powerConsumption: 100
     },
     {
       deviceId: "3",
       name: "TV",
-      action: action.on,
+      action: action.sleep,
       date: "2022-12-04",
       powerConsumption: 100
     },
     {
       deviceId: "4",
       name: "TV",
-      action: action.on,
+      action: action.sleep,
       date: "2022-12-04",
       powerConsumption: 100
     },
@@ -129,15 +146,12 @@ const logsData = {
       powerConsumption: 100
     }
   ],
-  key: "Logs Data"
+  key: "Logs Data",
+  tableFormat: {
+    deviceId: "Devices ID #",
+    name: "Name",
+    action: "Action",
+    date: "Date",
+    powerConsumption: "Power Consumption Kw/H"
+  }
 };
-
-const logsTableFormat = {
-  deviceId: "Devices ID #",
-  name: "Name",
-  action: "Action",
-  date: "Date",
-  powerConsumption: "Power Consumption Kw/H"
-};
-
-let itemPerPage = 5;
