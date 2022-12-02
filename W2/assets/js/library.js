@@ -1,6 +1,25 @@
 const $ = document.querySelector.bind(document);
 const $$ = document.querySelectorAll.bind(document);
 
+function ShowAlert(type = "", message = "") {
+  let alert = $(".alert");
+  let messageElement = alert.querySelector(".alert-message");
+  let icon = alert.querySelector(".alert-icon");
+
+  icon.classList.add(alertIcon[type]);
+  alert.classList.add("alert-" + type);
+  messageElement.innerText = message;
+
+  alert.style.display = "block";
+  setTimeout(function () {
+    alert.style.display = "none";
+    icon.classList.remove(alertIcon[type]);
+    alert.classList.remove("alert-" + type);
+  }, 3000);
+}
+
+
+
 String.prototype.toCapitalize = function () {
   return this.charAt(0).toUpperCase() + this.slice(1);
 };
