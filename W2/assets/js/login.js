@@ -18,13 +18,14 @@ loginForm.onsubmit = function (event) {
   if (username && password) {
     if (username === userData.username && password === userData.password) {
       SetItem(userData.key, username);
+      SetItem(isLoginKey, true);
       window.location.replace(dashboardPath);
-      alert(loginAlert.success);
     } else {
-      alert(loginAlert.wrong);
+      ShowAlert(alertType.error, loginAlert.wrong);
     }
   } else {
-    alert(loginAlert.empty);
+    ShowAlert(alertType.warning, loginAlert.empty);
+
   }
 
   ResetForm(loginForm);

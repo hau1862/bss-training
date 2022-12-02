@@ -22,10 +22,13 @@ SetItem(logsMetaData.pageKey, 1);
 if (GetItem(userData.key) !== userData.username) {
   localStorage.removeItem(userData.key);
   window.location.replace(loginPath);
+} else if (GetItem(isLoginKey)) {
+  ShowAlert(alertType.success, loginAlert.success);
+  SetItem(isLoginKey, false);
 }
 
 // Common
-if (!CheckElements(dashboardTable, logsTable, addDeviceForm, logoutButton, searchForm, ...contents, ...tabs, chartContainer, sidebarMobileIcon, sidebar, layout, searchAction, refreshButton)) {
+if (!CheckElements(dashboardTable, logsTable, addDeviceForm, logoutButton, searchForm, contents, tabs, chartContainer, sidebarMobileIcon, sidebar, layout, searchAction, refreshButton)) {
   window.location.replace(indexPath);
 }
 
@@ -92,10 +95,12 @@ addDeviceForm.onsubmit = function (event) {
     SetItem(dashboardMetaData.dataKey, dashboardData);
     SetItem(dashboardMetaData.pageKey, 1);
 
+    ShowAlert(alertType.success, addDeviceAlert.success);
+
     RenderTable(dashboardTable, dashboardData, dashboardMetaData);
     RenderPieChart(chartContainer, dashboardData);
   } else {
-    alert("Name or ip address is empty");
+    ShowAlert(alertType.warning, addDeviceAlert.empty);
   }
 
   ResetForm(this);
@@ -112,21 +117,45 @@ RenderTable(logsTable, logsData, logsMetaData);
 
 searchForm.onsubmit = function (event) {
   event.preventDefault();
-  let content = this.content.value;
-  searchResult = GetItem(searchResultKey);
+  let content = this.content.value.toLowerCase();
+  let action = searchAction.value;
 
-  if (!searchResult || !Array.isArray(searchResult)) {
-    searchResult = logsData;
-  }
+  searchResult = logsData;
 
   searchResult = searchResult.filter((item) => {
-    return item.name.toLowerCase().includes(content.toLowerCase());
+    return item.name.toLowerCase().includes(content);
   });
 
+  if (action) {
+    searchResult = searchResult.filter((item) => {
+      return item.action === action;
+    });
+  }
+
   SetItem(logsMetaData.pageKey, 1);
-  SetItem(searchResultKey, searchResult);
   RenderTable(logsTable, searchResult, logsMetaData);
   ResetForm(this);
+};
+
+searchAction.onchange = function (event) {
+  let action = this.value;
+  let content = searchForm.content.value.toLowerCase();
+  searchResult = logsData;
+
+  if (action) {
+    searchResult = searchResult.filter((item) => {
+      return item.action === action && item.name.toLowerCase().includes(content);
+    });
+  }
+
+  SetItem(logsMetaData.pageKey, 1);
+  RenderTable(logsTable, searchResult, logsMetaData);
+};
+
+refreshButton.onclick = function (event) {
+  localStorage.removeItem(searchResultKey);
+  SetItem(logsMetaData.pageKey, 1);
+  RenderTable(logsTable, logsData, logsMetaData);
 };
 
 // Sidebar
@@ -140,30 +169,4 @@ layout.onclick = function (event) {
   sidebar.style.display = "none";
   sidebarMobileIcon.style.display = "block";
   this.style.display = "none";
-};
-
-// Search Logs
-searchAction.onchange = function (event) {
-  let value = this.value;
-  searchResult = GetItem(searchResultKey);
-
-  if (!searchResult || !Array.isArray(searchResult)) {
-    searchResult = logsData;
-  }
-
-  if (value !== "All") {
-    searchResult = searchResult.filter((item) => {
-      return item.action === value;
-    });
-  }
-
-  SetItem(logsMetaData.pageKey, 1);
-  SetItem(searchResultKey, searchResult);
-  RenderTable(logsTable, searchResult, logsMetaData);
-};
-
-refreshButton.onclick = function (event) {
-  localStorage.removeItem(searchResultKey);
-  SetItem(logsMetaData.pageKey, 1);
-  RenderTable(logsTable, logsData, logsMetaData);
 };

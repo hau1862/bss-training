@@ -3,6 +3,19 @@ const indexPath = "./index.html";
 const loginPath = "./login.html";
 const dashboardPath = "./dashboard.html";
 
+// Alert
+const alertType = {
+  success: "success",
+  warning: "warning",
+  error: "error"
+};
+
+const alertIcon = {
+  success: "fa-check",
+  warning: "fa-exclamation-triangle",
+  error: "fa-exclamation-circle"
+};
+
 // User Data
 const userData = {
   username: "john",
@@ -10,7 +23,8 @@ const userData = {
   key: "username"
 };
 
-// Login Message
+// Login
+const isLoginKey = "login now";
 const loginAlert = {
   success: "Login success",
   wrong: "Username or password is wrong",
@@ -20,7 +34,12 @@ const loginAlert = {
 // Chart Color
 const listColor = ["brown", "black", "blue", "green", "yellow", "orange", "red"];
 
-// Table    search result is list index
+// Table
+const addDeviceAlert = {
+  success: "Add device success",
+  empty: "Device name or IP is empty",
+};
+
 let dashboardData = [
   {
     device: "TV",
