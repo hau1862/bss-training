@@ -1,0 +1,55 @@
+.sidebar {
+  background-color: white;
+}
+
+.systemLogo {
+  text-decoration: none;
+  height: 60px;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  padding: 0px 12px;
+}
+
+.systemLogoImage {
+  height: 36px;
+  width: 36px;
+  margin-right: 12px;
+}
+
+.systemName {
+  font-size: 18px;
+  font-weight: bold;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.tabList {
+  list-style-type: none;
+  padding-left: 12px;
+}
+
+.tabItem {
+  height: 40px;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  padding: 8px 0px;
+  cursor: pointer;
+}
+
+.tabItem:hover {
+  background-color: rgb(232, 232, 232);
+}
+
+.tabItem.active {
+  color: blue;
+}
+
+.tabItemIcon {
+  width: 24px;
+  height: 24px;
+  margin-right: 12px;
+}
+
+.tabItemName {}

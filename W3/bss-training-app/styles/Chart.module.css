@@ -1,0 +1,61 @@
+.chartContainer {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  background-color: white;
+}
+
+.pieChart {
+  background: conic-gradient(brown 0.00%, black 0.00% 0.55%, blue 0.55% 6.08%, green 6.08% 13.68%, yellow 13.68% 23.27%, orange 23.27% 40.47%, red 40.47%);
+  border-radius: 50%;
+  width: 280px;
+  height: 280px;
+}
+
+.chartExplain {
+  margin-left: 32px;
+  background-color: white;
+}
+
+.entry {
+  display: flex;
+  align-items: center;
+  margin: 4px;
+}
+
+.entryColor {
+  height: 16px;
+  width: 16px;
+}
+
+.entryText {
+  margin-left: 8px;
+}
+
+#colorRed {
+  background-color: red;
+}
+
+#colorOrange {
+  background-color: orange;
+}
+
+#colorYellow {
+  background-color: yellow;
+}
+
+#colorGreen {
+  background-color: green;
+}
+
+#colorBlue {
+  background-color: blue;
+}
+
+#colorBlack {
+  background-color: black;
+}
+
+#colorBrown {
+  background-color: brown;
+}

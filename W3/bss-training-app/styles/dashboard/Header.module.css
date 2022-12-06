@@ -1,0 +1,38 @@
+.header {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  padding: 12px 12px;
+  background-color: white;
+}
+
+.hamburger {
+  width: 40px;
+  height: 40px;
+  display: none;
+}
+
+.userInfo {
+  height: 100%;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+}
+
+.userImage {
+  width: 36px;
+  height: 36px;
+}
+
+.userGreet {
+  margin: 0px 12px 0px 8px;
+}
+
+.logoutButton {
+  color: white;
+  background-color: orange;
+  border-style: solid;
+  border-radius: 8px;
+  border-color: rgb(232, 232, 232);
+  padding: 6px 16px;
+}

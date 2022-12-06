@@ -1,0 +1,46 @@
+.formContainer {
+  background-color: white;
+  border-radius: 8px;
+  text-align: center;
+  padding: 32px 48px;
+}
+
+.formHeading {
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.form {}
+
+.formInput {
+  width: 280px;
+  background-color: rgb(240, 240, 240);
+  border-style: solid;
+  border-radius: 8px;
+  border-color: rgb(232, 232, 232);
+  box-sizing: border-box;
+  padding: 8px 12px;
+  margin: 8px 0px;
+  outline: none;
+}
+
+.formSelect {
+  margin-right: 16px;
+  padding: 4px 12px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.formSubmit {
+  color: white;
+  background-color: orange;
+  border-radius: 8px;
+  border-style: solid;
+  border-color: rgb(232, 232, 232);
+  padding: 8px 16px;
+  margin: 12px 8px;
+  cursor: pointer;
+}
+
+.signUp {}

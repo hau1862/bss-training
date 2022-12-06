@@ -1,0 +1,48 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(230, 230, 230);
+  padding: 60px 60px 0px;
+}
+
+.tableContainer {
+  background-color: white;
+  margin-bottom: 20px;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dashboardChartContainer {
+  margin: 16px;
+}
+
+.addDeviceFormContainer {
+  margin: 16px;
+}
+
+.tableHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 12px;
+}
+
+.refreshButton {
+  color: white;
+  background-color: rgb(81, 81, 255);
+  padding: 8px 16px;
+  border-color: rgb(232, 232, 232);
+  border-style: solid;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.tableSearchForm {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
