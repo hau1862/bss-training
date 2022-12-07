@@ -1,16 +1,3 @@
-.formContainer {
-  background-color: white;
-  border-radius: 8px;
-  text-align: center;
-  padding: 32px 48px;
-}
-
-.formHeading {
-  text-transform: uppercase;
-  font-weight: bold;
-  font-size: 20px;
-}
-
 .form {}
 
 .formInput {

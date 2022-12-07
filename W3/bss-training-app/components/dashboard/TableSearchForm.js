@@ -1,4 +1,4 @@
-import formStyle from "../../../styles/Form.module.css";
+import formStyle from "../../styles/Form.module.css";
 
 export default function TableSearchForm(props) {
   return <form action="#" method="get" id="table-search-form" className={`${formStyle.form} ${props.className}`}>

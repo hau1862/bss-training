@@ -1,4 +1,4 @@
-import tableStyle from "../../../styles/Table.module.css";
+import tableStyle from "../../styles/Table.module.css";
 
 export default function DashboardTable(props) {
   return <table>

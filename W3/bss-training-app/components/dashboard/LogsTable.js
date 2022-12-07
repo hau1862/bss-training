@@ -1,3 +1,5 @@
+import tableStyle from "../../styles/Table.module.css";
+
 export default function LogsTable() {
   return <table>
     <thead>

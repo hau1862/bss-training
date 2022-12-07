@@ -27,6 +27,8 @@
 .tabList {
   list-style-type: none;
   padding-left: 12px;
+  padding: 0px;
+  margin: 0px;
 }
 
 .tabItem {
@@ -34,7 +36,7 @@
   display: flex;
   justify-content: left;
   align-items: center;
-  padding: 8px 0px;
+  padding: 8px 0px 8px 16px;
   cursor: pointer;
 }
 

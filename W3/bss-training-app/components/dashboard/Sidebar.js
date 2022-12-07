@@ -4,13 +4,14 @@ import logo from "../../public/logo.png";
 import dashboard from "../../public/dashboard.png";
 import logs from "../../public/logs.png";
 import settings from "../../public/settings.png";
+import Link from "next/link";
 
 export default function Sidebar(props) {
   return <div className={`${sidebarStyle.sidebar} ${props.className}`}>
-    <a href="#" className={sidebarStyle.systemLogo}>
+    <Link href="#" className={sidebarStyle.systemLogo}>
       <Image src={logo} alt="logo" className={sidebarStyle.systemLogoImage} />
       <span className={sidebarStyle.systemName}>Device Manager</span>
-    </a>
+    </Link>
     <ul className={sidebarStyle.tabList} >
       <li className={sidebarStyle.tabItem}>
         <Image src={dashboard} alt="dashboard" className={sidebarStyle.tabItemIcon} />

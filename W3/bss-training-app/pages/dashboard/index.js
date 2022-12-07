@@ -1,10 +1,10 @@
 import Head from "next/head";
-import Header from "./Header";
-import Sidebar from "./Sidebar";
-import Alert from "../../commons/Alert";
-import Dashboard from "./Content/Dashboard";
-import Logs from "./Content/Logs";
-import Settings from "./Content/Settings";
+import Header from "../../components/dashboard/Header";
+import Sidebar from "../../components/dashboard/Sidebar";
+import Alert from "../../components/Alert";
+import Dashboard from "../../components/dashboard/Dashboard";
+import Logs from "../../components/dashboard/Logs";
+import Settings from "../../components/dashboard/Settings";
 import indexStyle from "../../styles/dashboard/Index.module.css";
 
 export default function DashboardIndex() {
@@ -19,8 +19,8 @@ export default function DashboardIndex() {
       <div className={indexStyle.main}>
         <Header className={indexStyle.header} />
         {/* <Dashboard className={indexStyle.content} /> */}
-        {/* <Logs className={indexStyle.content} /> */}
-        <Settings className={indexStyle.content} />
+        <Logs className={indexStyle.content} />
+        {/* <Settings className={ indexStyle.content } /> */}
       </div>
     </div>
   </div>;

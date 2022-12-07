@@ -1,7 +1,7 @@
 import Head from "next/head";
-import indexStyle from "../../styles/LoginIndex.module.css";
-import LoginForm from "./LoginForm";
-import Alert from "../../commons/Alert";
+import indexStyle from "../../styles/login/Index.module.css";
+import LoginForm from "../../components/login/LoginForm";
+import Alert from "../../components/Alert";
 
 export default function Login() {
   return <div id="__next">
@@ -9,8 +9,11 @@ export default function Login() {
       <title>Login | Hau NT</title>
     </Head>
     <Alert />
-    <div id={indexStyle.root}>
-      <LoginForm className={indexStyle.loginFormContainer} />
+    <div id={ indexStyle.root }>
+      <div className={ indexStyle.loginFormContainer }>
+        <span className={ indexStyle.loginFormHeading }>Soiot System</span>
+        <LoginForm />
+      </div>;
     </div>
   </div>;
 }

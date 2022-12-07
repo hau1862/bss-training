@@ -1,4 +1,4 @@
-import chartStyle from "../../../styles/Chart.module.css";
+import chartStyle from "../../styles/Chart.module.css";
 
 export default function DashboardChart(props) {
   return <div className={`${chartStyle.chartContainer} ${props.className}`}>

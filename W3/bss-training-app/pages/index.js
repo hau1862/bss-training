@@ -1,19 +1,19 @@
 import Head from 'next/head';
-import Alert from "../commons/Alert";
+import Alert from "../components/Alert";
 import Link from "next/link";
-import homeStyle from "../styles/Home.module.css";
+import indexStyle from "../styles/Index.module.css";
 
 export default function Home() {
 
-  console.log(homeStyle);
+  console.log(indexStyle);
   return (
     <div id="__next">
       <Head>
         <title>Home Page | Hau NT</title>
       </Head>
       <Alert />
-      <div id={homeStyle.root}>
-        <Link href="/login" className={homeStyle.loginButton}>Go To Login Page</Link>
+      <div id={ indexStyle.root }>
+        <Link href="/login" className={ indexStyle.loginButton }>Go To Login Page</Link>
       </div>
     </div>
   );

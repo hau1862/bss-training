@@ -1,0 +1,20 @@
+#root {
+  height: 100%;
+  background-color: rgb(172, 172, 172);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loginFormContainer {
+  background-color: white;
+  border-radius: 8px;
+  text-align: center;
+  padding: 32px 48px;
+}
+
+.loginFormHeading {
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 20px;
+}

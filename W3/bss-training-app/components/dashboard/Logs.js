@@ -1,4 +1,4 @@
-import contentStyle from "../../../styles/dashboard/Content.module.css";
+import contentStyle from "../../styles/dashboard/Content.module.css";
 import LogsTable from "./LogsTable";
 import Head from "next/head";
 import TableSearchForm from "./TableSearchForm";
