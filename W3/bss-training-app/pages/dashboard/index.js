@@ -6,8 +6,19 @@ import Dashboard from "../../components/dashboard/Dashboard";
 import Logs from "../../components/dashboard/Logs";
 import Settings from "../../components/dashboard/Settings";
 import indexStyle from "../../styles/dashboard/Index.module.css";
+import library from "../../commons/library";
+import constants from "../../commons/constants";
+import { useRouter } from "next/router";
 
 export default function DashboardIndex() {
+  const username = library.getItem(constants.userKey);
+  const router = useRouter();
+
+  if (!username) {
+    library.removeItem(constants.userKey);
+    router.push(constants.loginPath);
+  }
+
   return <div id="__next">
     <Head>
       <title>Dashboard</title>
