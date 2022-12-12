@@ -37,7 +37,7 @@ export default function LoginForm(props) {
     event.target.reset();
   };
 
-  return <form action="#" method="post" className={formStyle.form} onSubmit={handleSubmitLoginForm}>
+  return <form action="http://localhost:8000/login" method="post" className={formStyle.form}>
     <input type="text" name="username" className={formStyle.formInput} />
     <br />
     <input type="password" name="password" className={formStyle.formInput} />
