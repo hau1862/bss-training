@@ -7,17 +7,27 @@ import Logs from "../../components/dashboard/Logs";
 import Settings from "../../components/dashboard/Settings";
 import indexStyle from "../../styles/dashboard/Index.module.css";
 import library from "../../commons/library";
-import constants from "../../commons/constants";
+import { userKey, loginPath, serverHost } from "../../commons/constants";
 import { useRouter } from "next/router";
+import { useState, useEffect } from "react";
 
 export default function DashboardIndex() {
-  const username = library.getItem(constants.userKey);
   const router = useRouter();
+  useEffect(() => {
+    const userToken = library.getItem(userKey);
+    if (userToken) {
+      fetch(serverHost + "/user?token=" + userToken)
+        .then(response => response.json())
+        .catch((error) => {
+          router.push(loginPath);
+        });
+    } else {
+      library.removeItem(userKey);
+      router.push(loginPath);
+    }
+  }, []);
 
-  if (!username) {
-    library.removeItem(constants.userKey);
-    router.push(constants.loginPath);
-  }
+  const [content, setContent] = useState("dashboard");
 
   return <div id="__next">
     <Head>
@@ -26,12 +36,26 @@ export default function DashboardIndex() {
     <Alert />
     <div id={indexStyle.root}>
       <div className={indexStyle.layout}></div>
-      <Sidebar className={indexStyle.sidebar} />
+      <Sidebar className={indexStyle.sidebar} content={content} changeContent={(content) => {
+        setContent(content);
+      }} />
       <div className={indexStyle.main}>
         <Header className={indexStyle.header} />
-        {/* <Dashboard className={indexStyle.content} /> */}
-        <Logs className={indexStyle.content} />
-        {/* <Settings className={ indexStyle.content } /> */}
+        {
+          ((content) => {
+            switch (content) {
+              case "logs": {
+                return <Logs className={indexStyle.content} />;
+              }
+              case "settings": {
+                return <Settings className={indexStyle.content} />;
+              }
+              default: {
+                return <Dashboard className={indexStyle.content} />;
+              }
+            }
+          })(content)
+        }
       </div>
     </div>
   </div>;

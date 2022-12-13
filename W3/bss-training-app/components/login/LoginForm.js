@@ -2,42 +2,31 @@ import formStyle from "../../styles/Form.module.css";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import library from "../../commons/library";
-import constants from "../../commons/constants";
+import { serverHost, userKey, dashboardPath } from "../../commons/constants";
 
 export default function LoginForm(props) {
   const router = useRouter();
-
-  const validateLoginData = function (username, password) {
-    return username && password && !username.includes(" ") && !password.includes(" ");
-  };
-
-  const getUserData = function () {
-    let result = {
-      username: "john",
-      password: "1234"
-    };
-
-    return result;
-  };
-
-  const handleSubmitLoginForm = function (event) {
+  return <form action="#" method="post" className={formStyle.form} onSubmit={(event) => {
     event.preventDefault();
-    const username = event.target.username.value.trim();
-    const password = event.target.password.value.trim();
-
-    if (validateLoginData(username, password)) {
-      const target = getUserData();
-
-      if (username === target.username && password === target.password) {
-        library.setItem(constants.userKey, username);
-        router.push(constants.dashboardPath);
-      }
-    }
-
-    event.target.reset();
-  };
-
-  return <form action="http://localhost:8000/login" method="post" className={formStyle.form}>
+    let username = event.target.username.value.trim();
+    let password = event.target.password.value.trim();
+    fetch(serverHost + "/login", {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: "POST",
+      body: JSON.stringify({ username, password })
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        const { username, token, message } = data;
+        if (username && token) {
+          library.setItem(userKey, username + token);
+          router.push(dashboardPath);
+        }
+      });
+  }}>
     <input type="text" name="username" className={formStyle.formInput} />
     <br />
     <input type="password" name="password" className={formStyle.formInput} />
