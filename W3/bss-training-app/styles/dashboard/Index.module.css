@@ -30,3 +30,31 @@
 .content {
   flex: 1;
 }
+
+@media screen and (min-width: 1092px) {
+  .layout {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1092px) {
+
+  .layout {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .header {
+    justify-content: space-between;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  .content {
+    padding: 20px 0px;
+  }
+
+}

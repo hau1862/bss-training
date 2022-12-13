@@ -31,3 +31,9 @@
 }
 
 .signUp {}
+
+@media screen and (max-width: 576px) {
+  .formInput {
+    width: 100%;
+  }
+}

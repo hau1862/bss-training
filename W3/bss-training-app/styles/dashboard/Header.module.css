@@ -36,3 +36,9 @@
   border-color: rgb(232, 232, 232);
   padding: 6px 16px;
 }
+
+@media screen and (max-width: 768px) {
+  .hamburger {
+    display: block;
+  }
+}
