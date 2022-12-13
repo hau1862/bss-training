@@ -13,6 +13,8 @@ import { useState, useEffect } from "react";
 
 export default function DashboardIndex() {
   const router = useRouter();
+  const [content, setContent] = useState("dashboard");
+
   useEffect(() => {
     const userToken = library.getItem(userKey);
     if (userToken) {
@@ -27,7 +29,6 @@ export default function DashboardIndex() {
     }
   }, []);
 
-  const [content, setContent] = useState("dashboard");
 
   return <div id="__next">
     <Head>

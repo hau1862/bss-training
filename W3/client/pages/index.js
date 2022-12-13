@@ -6,7 +6,6 @@ import indexStyle from "../styles/Index.module.css";
 
 export default function Home() {
 
-  console.log(indexStyle);
   return (
     <div id="__next">
       <Head>
