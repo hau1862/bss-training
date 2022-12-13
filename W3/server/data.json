@@ -3,155 +3,54 @@
     {
       "username": "john",
       "password": "1234",
-      "token": 50
+      "token": 55
     }
   ],
-  "dashboardData": [
-    {
-      "device": "TV",
-      "macAddress": "00:1B:44:11:3A:B7",
-      "ip": "127.0.0.2",
-      "createdDate": "2021-05-31",
-      "powerConsumption": 50
-    },
-    {
-      "device": "Reg",
-      "macAddress": "00:1B:44:11:3A:B7",
-      "ip": "127.0.0.2",
-      "createdDate": "2021-05-31",
-      "powerConsumption": 100
-    },
-    {
-      "device": "Laptop",
-      "macAddress": "00:1B:44:11:3A:B7",
-      "ip": "127.0.0.2",
-      "createdDate": "2021-05-31",
-      "powerConsumption": 75
-    },
-    {
-      "device": "TV",
-      "macAddress": "00:1B:44:11:3A:B7",
-      "ip": "127.0.0.2",
-      "createdDate": "2021-05-31",
-      "powerConsumption": 50
-    },
-    {
-      "device": "Reg",
-      "macAddress": "00:1B:44:11:3A:B7",
-      "ip": "127.0.0.2",
-      "createdDate": "2021-05-31",
-      "powerConsumption": 100
-    },
-    {
-      "device": "fsafsd",
-      "macAddress": "00:1B:44:11:3A:B7",
-      "ip": "3123",
-      "createdDate": "2021-05-31",
-      "powerConsumption": 50
-    }
-  ],
-  "logsData": [
-    {
-      "deviceId": "1",
-      "name": "TV",
-      "action": "On",
-      "date": "2022-12-04",
-      "powerConsumption": 100
-    },
-    {
-      "deviceId": "2",
-      "name": "Reg",
-      "action": "Off",
-      "date": "2022-12-04",
-      "powerConsumption": 100
-    },
-    {
-      "deviceId": "3",
-      "name": "Temp",
-      "action": "Sleep",
-      "date": "2022-12-04",
-      "powerConsumption": 100
-    },
-    {
-      "deviceId": "4",
-      "name": "Hello",
-      "action": "Sleep",
-      "date": "2022-12-04",
-      "powerConsumption": 100
-    },
-    {
-      "deviceId": "5",
-      "name": "TV",
-      "action": "On",
-      "date": "2022-12-04",
-      "powerConsumption": 100
-    },
-    {
-      "deviceId": "6",
-      "name": "Pink",
-      "action": "On",
-      "date": "2022-12-04",
-      "powerConsumption": 100
-    },
-    {
-      "deviceId": "7",
-      "name": "Help",
-      "action": "On",
-      "date": "2022-12-04",
-      "powerConsumption": 100
-    },
-    {
-      "deviceId": "8",
-      "name": "TV",
-      "action": "On",
-      "date": "2022-12-04",
-      "powerConsumption": 100
-    },
-    {
-      "deviceId": "6",
-      "name": "Pink",
-      "action": "On",
-      "date": "2022-12-04",
-      "powerConsumption": 100
-    },
-    {
-      "deviceId": "7",
-      "name": "Help",
-      "action": "On",
-      "date": "2022-12-04",
-      "powerConsumption": 100
-    },
-    {
-      "deviceId": "8",
-      "name": "TV",
-      "action": "On",
-      "date": "2022-12-04",
-      "powerConsumption": 100
-    },
-    {
-      "deviceId": "6",
-      "name": "Pink",
-      "action": "On",
-      "date": "2022-12-04",
-      "powerConsumption": 100
-    },
-    {
-      "deviceId": "7",
-      "name": "Help",
-      "action": "On",
-      "date": "2022-12-04",
-      "powerConsumption": 100
-    },
-    {
-      "deviceId": "8",
-      "name": "TV",
-      "action": "On",
-      "date": "2022-12-04",
-      "powerConsumption": 100
-    }
-  ],
-  "dashboardMetaData": {
-    "dataKey": "Dashboard Data",
+  "dashboard": {
+    "data": [
+      {
+        "device": "TV",
+        "macAddress": "00:1B:44:11:3A:B7",
+        "ip": "127.0.0.2",
+        "createdDate": "2021-05-31",
+        "powerConsumption": 50
+      },
+      {
+        "device": "Reg",
+        "macAddress": "00:1B:44:11:3A:B7",
+        "ip": "127.0.0.2",
+        "createdDate": "2021-05-31",
+        "powerConsumption": 100
+      },
+      {
+        "device": "Laptop",
+        "macAddress": "00:1B:44:11:3A:B7",
+        "ip": "127.0.0.2",
+        "createdDate": "2021-05-31",
+        "powerConsumption": 75
+      },
+      {
+        "device": "TV",
+        "macAddress": "00:1B:44:11:3A:B7",
+        "ip": "127.0.0.2",
+        "createdDate": "2021-05-31",
+        "powerConsumption": 50
+      },
+      {
+        "device": "Reg",
+        "macAddress": "00:1B:44:11:3A:B7",
+        "ip": "127.0.0.2",
+        "createdDate": "2021-05-31",
+        "powerConsumption": 100
+      },
+      {
+        "device": "fsafsd",
+        "macAddress": "00:1B:44:11:3A:B7",
+        "ip": "3123",
+        "createdDate": "2021-05-31",
+        "powerConsumption": 50
+      }
+    ],
     "attributes": [
       "device",
       "macAddress",
@@ -159,23 +58,115 @@
       "createdDate",
       "powerConsumption"
     ],
-    "columnNames": [
-      "Devices",
-      "MAC Address",
-      "IP",
-      "Created Date",
-      "Power Consumption (Kw/H)"
+    "columns": {
+      "device": "Devices",
+      "macAddress": "MAC Address",
+      "ip": "IP",
+      "createdDate": "Created Date",
+      "powerConsumption": "Power Consumption (Kw/H)"
+    }
+  },
+  "logs": {
+    "data": [
+      {
+        "deviceId": "1",
+        "name": "TV",
+        "action": "On",
+        "date": "2022-12-04",
+        "powerConsumption": 100
+      },
+      {
+        "deviceId": "2",
+        "name": "Reg",
+        "action": "Off",
+        "date": "2022-12-04",
+        "powerConsumption": 100
+      },
+      {
+        "deviceId": "3",
+        "name": "Temp",
+        "action": "Sleep",
+        "date": "2022-12-04",
+        "powerConsumption": 100
+      },
+      {
+        "deviceId": "4",
+        "name": "Hello",
+        "action": "Sleep",
+        "date": "2022-12-04",
+        "powerConsumption": 100
+      },
+      {
+        "deviceId": "5",
+        "name": "TV",
+        "action": "On",
+        "date": "2022-12-04",
+        "powerConsumption": 100
+      },
+      {
+        "deviceId": "6",
+        "name": "Pink",
+        "action": "On",
+        "date": "2022-12-04",
+        "powerConsumption": 100
+      },
+      {
+        "deviceId": "7",
+        "name": "Help",
+        "action": "On",
+        "date": "2022-12-04",
+        "powerConsumption": 100
+      },
+      {
+        "deviceId": "8",
+        "name": "TV",
+        "action": "On",
+        "date": "2022-12-04",
+        "powerConsumption": 100
+      },
+      {
+        "deviceId": "6",
+        "name": "Pink",
+        "action": "On",
+        "date": "2022-12-04",
+        "powerConsumption": 100
+      },
+      {
+        "deviceId": "7",
+        "name": "Help",
+        "action": "On",
+        "date": "2022-12-04",
+        "powerConsumption": 100
+      },
+      {
+        "deviceId": "8",
+        "name": "TV",
+        "action": "On",
+        "date": "2022-12-04",
+        "powerConsumption": 100
+      },
+      {
+        "deviceId": "6",
+        "name": "Pink",
+        "action": "On",
+        "date": "2022-12-04",
+        "powerConsumption": 100
+      },
+      {
+        "deviceId": "7",
+        "name": "Help",
+        "action": "On",
+        "date": "2022-12-04",
+        "powerConsumption": 100
+      },
+      {
+        "deviceId": "8",
+        "name": "TV",
+        "action": "On",
+        "date": "2022-12-04",
+        "powerConsumption": 100
+      }
     ],
-    "itemPerPage": 5,
-    "pageKey": "Dashboard Page"
-  },
-  "action": {
-    "on": "Turn On",
-    "off": "Turn Off",
-    "sleep": "Sleep"
-  },
-  "logsMetaData": {
-    "dataKey": "Logs Data",
     "attributes": [
       "deviceId",
       "name",
@@ -183,14 +174,12 @@
       "date",
       "powerConsumption"
     ],
-    "columnNames": [
-      "Device ID",
-      "Name",
-      "Action",
-      "Date",
-      "Power Consumption (Kw/H)"
-    ],
-    "itemPerPage": 5,
-    "pageKey": "Logs Page"
+    "columns": {
+      "deviceId": "Device ID",
+      "name": "Name",
+      "action": "Action",
+      "date": "Date",
+      "powerConsumption": "Power Consumption (Kw/H)"
+    }
   }
 }

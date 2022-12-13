@@ -1,15 +1,21 @@
 import formStyle from "../../styles/Form.module.css";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import library from "../../commons/library";
+import { setItem } from "../../commons/library";
 import { serverHost, userKey, dashboardPath } from "../../commons/constants";
+import { AlertContext, alertType } from "../Alert";
+import { useContext } from "react";
 
 export default function LoginForm(props) {
   const router = useRouter();
+  const showAlert = useContext(AlertContext);
+
   return <form action="#" method="post" className={formStyle.form} onSubmit={(event) => {
     event.preventDefault();
+
     let username = event.target.username.value.trim();
     let password = event.target.password.value.trim();
+
     fetch(serverHost + "/login", {
       headers: {
         'Accept': 'application/json',
@@ -22,7 +28,7 @@ export default function LoginForm(props) {
       .then((data) => {
         const { username, token, message } = data;
         if (username && token) {
-          library.setItem(userKey, username + token);
+          setItem(userKey, { username, token });
           router.push(dashboardPath);
         }
       });

@@ -1,14 +1,14 @@
+import indexStyle from "../../styles/dashboard/Index.module.css";
+import { AlertProvider } from "../../components/Alert";
 import Head from "next/head";
 import Header from "../../components/dashboard/Header";
 import Sidebar from "../../components/dashboard/Sidebar";
-import Alert from "../../components/Alert";
 import Dashboard from "../../components/dashboard/Dashboard";
 import Logs from "../../components/dashboard/Logs";
 import Settings from "../../components/dashboard/Settings";
-import indexStyle from "../../styles/dashboard/Index.module.css";
-import library from "../../commons/library";
-import { userKey, loginPath, serverHost } from "../../commons/constants";
 import { useRouter } from "next/router";
+import { getItem, removeItem } from "../../commons/library";
+import { userKey, loginPath, serverHost } from "../../commons/constants";
 import { useState, useEffect } from "react";
 
 export default function DashboardIndex() {
@@ -16,25 +16,25 @@ export default function DashboardIndex() {
   const [content, setContent] = useState("dashboard");
 
   useEffect(() => {
-    const userToken = library.getItem(userKey);
-    if (userToken) {
-      fetch(serverHost + "/user?token=" + userToken)
+    const { username, token } = getItem(userKey);
+    if (username && token) {
+      const apiSource = `${serverHost}/user?username=${username}&token=${token}`;
+
+      fetch(apiSource)
         .then(response => response.json())
         .catch((error) => {
           router.push(loginPath);
         });
     } else {
-      library.removeItem(userKey);
+      removeItem(userKey);
       router.push(loginPath);
     }
-  }, []);
+  });
 
-
-  return <div id="__next">
+  return <AlertProvider>
     <Head>
       <title>Dashboard</title>
     </Head>
-    <Alert />
     <div id={indexStyle.root}>
       <div className={indexStyle.layout}></div>
       <Sidebar className={indexStyle.sidebar} content={content} changeContent={(content) => {
@@ -59,5 +59,5 @@ export default function DashboardIndex() {
         }
       </div>
     </div>
-  </div>;
+  </AlertProvider>;
 }

@@ -1,6 +1,6 @@
 import Head from "next/head";
 import DashboardChart from "./DashboardChart";
-import DashboardTable from "./DashboardTable";
+import Table from "../../components/Table";
 import AddDeviceForm from "./AddDeviceForm";
 import contentStyle from "../../styles/dashboard/Content.module.css";
 import { useState, useEffect } from "react";
@@ -9,7 +9,8 @@ import { serverHost } from "../../commons/constants";
 export default function Dashboard(props) {
   const [state, setState] = useState({
     data: [],
-    metadata: {}
+    attributes: [],
+    columns: {}
   });
 
   useEffect(() => {
@@ -25,7 +26,7 @@ export default function Dashboard(props) {
       <title>Dashboard | Hau NT</title>
     </Head>
     <div className={contentStyle.tableContainer}>
-      <DashboardTable data={state.data} metadata={state.metadata} />
+      <Table data={state.data} attributes={state.attributes} columns={state.columns} />
     </div>
 
     <div className={contentStyle.container}>

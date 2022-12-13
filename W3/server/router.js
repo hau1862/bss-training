@@ -1,30 +1,17 @@
 const Router = require("koa-router");
 const router = Router();
-const fs = require("fs");
 const appHost = "http://localhost:3000";
-const dataSource = "./data.json";
-const fileOptions = {
-  encoding: "utf-8"
-};
-
-function randomToken() {
-  return Math.floor(Math.random() * 100) + 1;
-}
-
-function validateString(string = "") {
-  return string.length > 0 && !string.includes(" ");
-}
+const dataPath = "./data.json";
+const { readJSONFile, writeJSONFile, randomToken } = require("./library");
 
 router.get("/dashboard", function (context, next) {
-  const data = JSON.parse(fs.readFileSync(dataSource, fileOptions));
-  context.response.body = { data: data.dashboardData, metadata: data.dashboardMetaData };
-  context.response.status = 200;
+  const data = readJSONFile(dataPath);
+  context.response.body = data.dashboard;
 });
 
 router.get("/logs", function (context, next) {
-  const data = JSON.parse(fs.readFileSync(dataSource, fileOptions));
-  context.response.body = { data: data.logsData, metadata: data.logsMetaData };
-  context.response.status = 200;
+  const data = readJSONFile(dataPath);
+  context.response.body = data.logs;
 });
 
 router.post("/add-device", function (context, next) {
@@ -38,33 +25,28 @@ router.post("/add-device", function (context, next) {
     ...deviceInfo
   };
 
-  const data = JSON.parse(fs.readFileSync(dataSource, fileOptions));
-  data.dashboardData.push(newDevice);
-  fs.writeFileSync(dataSource, JSON.stringify(data), fileOptions);
-
-  context.response.status = 200;
-  context.response.body = "Add Device Success";
+  const data = readJSONFile(dataPath);
+  data.dashboard.data.push(newDevice);
+  writeJSONFile(dataPath, data);
 });
 
 router.post("/login", function (context, next, ...args) {
-
-  const data = JSON.parse(fs.readFileSync(dataSource, fileOptions));
+  const data = readJSONFile(dataPath);
   const users = data.users;
-  const { username, password } = context.request.body;
+  const loginData = context.request.body;
+  let length = users.length, index;
 
-  if (users && users.length > 0 && validateString(username) && validateString(password)) {
-    let length = users.length, index;
-
+  if (users && length > 0) {
     for (index = 0; index < length; index++) {
-      if (users[index].username === username && users[index].password === password) {
+      if (users[index].username === loginData.username && users[index].password === loginData.password) {
         break;
       }
     }
 
     if (index < length) {
       users[index].token = randomToken();
-      fs.writeFileSync(dataSource, JSON.stringify(data), fileOptions);
-      context.response.body = { username, token: users[index].token, message: "Login success" };
+      writeJSONFile(dataPath, data);
+      context.response.body = { username: users[index].username, token: users[index].token, message: "Login success" };
     } else {
       context.response.body = { message: "Wrong username or password" };
     }
@@ -73,19 +55,23 @@ router.post("/login", function (context, next, ...args) {
   }
 });
 
-router.get("/user", function (content, next) {
-  const { token } = content.request.query;
-  const { users } = JSON.parse(fs.readFileSync(dataSource, fileOptions));
+router.get("/user", function (context, next) {
+  const { username, token } = context.request.query;
+  const { users } = readJSONFile(dataPath);
   let length = users.length, i;
-  for (i = 0; i < length; i++) {
-    if (users[i].username + users[i].token === token) {
-      break;
+
+  if (users && length > 0) {
+    for (i = 0; i < length; i++) {
+      if (users[i].username === username && users[i].token === parseInt(token)) {
+        break;
+      }
     }
-  }
-  if (i >= length) {
-    context.response.status = 400;
-  } else {
-    content.response.body = { message: "Hello" };
+
+    if (i >= length) {
+      context.response.status = 400;
+    } else {
+      context.response.body = { message: "Hello" };
+    }
   }
 });
 

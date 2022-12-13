@@ -1,14 +1,15 @@
 import contentStyle from "../../styles/dashboard/Content.module.css";
-import LogsTable from "./LogsTable";
 import Head from "next/head";
 import TableSearchForm from "./TableSearchForm";
 import { useState, useEffect, useRef } from "react";
 import { serverHost } from "../../commons/constants";
+import Table from "../Table";
 
 export default function Logs(props) {
   const [state, setState] = useState({
     data: [],
-    metadata: {},
+    attributes: [],
+    columns: {},
     action: "All",
     content: ""
   });
@@ -42,9 +43,9 @@ export default function Logs(props) {
             setState({ ...state, action: action, content: content.trim() });
           }} />
       </div>
-      <LogsTable data={state.data.filter((device) => {
+      <Table data={state.data.filter((device) => {
         return (device.action === state.action || state.action === "All") && device.name.includes(state.content);
-      })} metadata={state.metadata} />
+      })} attributes={state.attributes} columns={state.columns} />
     </div>
   </div>;
 }
