@@ -16,6 +16,10 @@
 .sidebar {
   position: relative;
   z-index: 2;
+  border-style: solid;
+  border-width: 0px;
+  border-right-width: 2px;
+  border-color: rgb(100, 100, 100);
 }
 
 .main {
@@ -31,26 +35,11 @@
   flex: 1;
 }
 
-@media screen and (min-width: 1092px) {
-  .layout {
-    display: none;
-  }
-}
-
-@media screen and (max-width: 1092px) {
-
-  .layout {
-    display: none;
-  }
-}
-
 @media screen and (max-width: 768px) {
-  .header {
-    justify-content: space-between;
-  }
-
   .sidebar {
     display: none;
+    position: absolute;
+    height: 100%;
   }
 
   .content {

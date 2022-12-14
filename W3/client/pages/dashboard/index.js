@@ -13,7 +13,10 @@ import { useState, useEffect } from "react";
 
 export default function DashboardIndex() {
   const router = useRouter();
-  const [content, setContent] = useState("dashboard");
+  const [state, setState] = useState({
+    content: "dashboard",
+    hamburgerClicked: false
+  });
 
   useEffect(() => {
     const { username, token } = getItem(userKey);
@@ -23,7 +26,9 @@ export default function DashboardIndex() {
       fetch(apiSource)
         .then(response => response.json())
         .catch((error) => {
-          router.push(loginPath);
+          setTimeout(() => {
+            router.push(loginPath);
+          }, 0);
         });
     } else {
       removeItem(userKey);
@@ -36,12 +41,16 @@ export default function DashboardIndex() {
       <title>Dashboard</title>
     </Head>
     <div id={indexStyle.root}>
-      <div className={indexStyle.layout}></div>
-      <Sidebar className={indexStyle.sidebar} content={content} changeContent={(content) => {
-        setContent(content);
+      <div className={indexStyle.layout} style={state.hamburgerClicked ? { display: "block" } : {}} onClick={() => {
+        setState({ ...state, hamburgerClicked: !state.hamburgerClicked });
+      }}></div>
+      <Sidebar className={indexStyle.sidebar} style={state.hamburgerClicked ? { display: "block" } : {}} content={state.content} changeContent={(content) => {
+        setState({ ...state, content, hamburgerClicked: false });
       }} />
       <div className={indexStyle.main}>
-        <Header className={indexStyle.header} />
+        <Header className={indexStyle.header} clickHamburger={() => {
+          setState({ ...state, hamburgerClicked: !state.hamburgerClicked });
+        }} />
         {
           ((content) => {
             switch (content) {
@@ -55,7 +64,7 @@ export default function DashboardIndex() {
                 return <Dashboard className={indexStyle.content} />;
               }
             }
-          })(content)
+          })(state.content)
         }
       </div>
     </div>

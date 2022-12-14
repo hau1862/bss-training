@@ -2,7 +2,7 @@ import formStyle from "../../styles/Form.module.css";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { setItem } from "../../commons/library";
-import { serverHost, userKey, dashboardPath } from "../../commons/constants";
+import { serverHost, userKey, dashboardPath, loginAlertMessage } from "../../commons/constants";
 import { AlertContext, alertType } from "../Alert";
 import { useContext } from "react";
 
@@ -13,25 +13,34 @@ export default function LoginForm(props) {
   return <form action="#" method="post" className={formStyle.form} onSubmit={(event) => {
     event.preventDefault();
 
-    let username = event.target.username.value.trim();
-    let password = event.target.password.value.trim();
+    let username = event.target.username.value;
+    let password = event.target.password.value;
 
-    fetch(serverHost + "/login", {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      method: "POST",
-      body: JSON.stringify({ username, password })
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        const { username, token, message } = data;
-        if (username && token) {
-          setItem(userKey, { username, token });
-          router.push(dashboardPath);
-        }
-      });
+    if (username && !username.includes(" ") && password && !password.includes(" ")) {
+      fetch(serverHost + "/login", {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        method: "POST",
+        body: JSON.stringify({ username, password })
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          const { username, token } = data;
+          if (username && token) {
+            setItem(userKey, { username, token });
+            router.push(dashboardPath);
+          } else {
+            showAlert(alertType.error, loginAlertMessage.wrong);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      showAlert(alertType.warning, loginAlertMessage.empty);
+    }
   }}>
     <input type="text" name="username" className={formStyle.formInput} />
     <br />

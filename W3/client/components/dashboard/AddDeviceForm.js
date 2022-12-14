@@ -1,7 +1,12 @@
 import formStyle from "../../styles/Form.module.css";
 import { serverHost } from "../../commons/constants";
+import { addDeviceAlertMessage } from "../../commons/constants";
+import { AlertContext, alertType } from "../Alert";
+import { useContext } from "react";
 
 export default function AddDeviceForm(props) {
+  const showAlert = useContext(AlertContext);
+
   return <form action="#" method="post" className={formStyle.form} onSubmit={(event) => {
     event.preventDefault();
     let device = event.target.device.value.trim();
@@ -18,13 +23,14 @@ export default function AddDeviceForm(props) {
         body: JSON.stringify({ device, ip })
       })
         .then((response) => {
+          showAlert(alertType.success, addDeviceAlertMessage.success);
           return response.json();
         })
         .catch((error) => {
-
+          console.log(error);
         });
     } else {
-
+      showAlert(alertType.warning, addDeviceAlertMessage.empty);
     }
     event.target.reset();
   }}>

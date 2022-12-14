@@ -19,7 +19,6 @@ export default function Login() {
         .then(response => response.json())
         .then((data) => {
           router.push(dashboardPath);
-
         })
         .catch((error) => {
         });

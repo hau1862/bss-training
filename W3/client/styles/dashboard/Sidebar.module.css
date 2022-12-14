@@ -45,7 +45,7 @@
 }
 
 .tabItemActive {
-  color: blue;
+  color: rgb(0, 160, 0);
 }
 
 .tabItemIcon {
@@ -54,4 +54,6 @@
   margin-right: 12px;
 }
 
-.tabItemName {}
+.tabItemName {
+  font-weight: bold;
+}

@@ -37,7 +37,7 @@ function AlertProvider(props) {
     alertContainerRef.current.style.visibility = "visible";
     setTimeout(() => {
       alertContainerRef.current.style.visibility = "hidden";
-    }, 1000);
+    }, 2000);
   }}>
     <div className={`${alertStyle.alert} ${alertStyle[alertClassKey[state.type]]}`} ref={alertContainerRef}>
       <span className={alertStyle.alertMessage}>{state.message}</span>

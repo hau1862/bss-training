@@ -24,7 +24,7 @@ export default function Sidebar(props) {
     return result;
   }
 
-  return <div className={`${sidebarStyle.sidebar} ${props.className}`}>
+  return <div className={`${sidebarStyle.sidebar} ${props.className}`} style={props.style}>
     <Link href="#" className={sidebarStyle.systemLogo}>
       <Image src={logo} alt="logo" className={sidebarStyle.systemLogoImage} />
       <span className={sidebarStyle.systemName}>Device Manager</span>

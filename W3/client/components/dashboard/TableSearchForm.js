@@ -6,9 +6,11 @@ export default function TableSearchForm(props) {
     const action = event.target.action.value;
     const content = event.target.content.value.trim();
     props.changeFilter(action, content);
+    event.target.content.value = "";
   }}>
     <select name="action" id="" className={formStyle.formSelect} defaultValue="" form="table-search-form" onChange={(event) => {
       const action = event.target.value;
+      event.target.parentElement.content.value = "";
       props.changeFilter(action);
     }}>
       <option value="All">All</option>

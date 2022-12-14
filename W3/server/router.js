@@ -28,6 +28,7 @@ router.post("/add-device", function (context, next) {
   const data = readJSONFile(dataPath);
   data.dashboard.data.push(newDevice);
   writeJSONFile(dataPath, data);
+  context.response.body = { message: "Add device success" };
 });
 
 router.post("/login", function (context, next, ...args) {

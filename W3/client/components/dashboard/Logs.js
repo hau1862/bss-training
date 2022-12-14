@@ -40,11 +40,11 @@ export default function Logs(props) {
         }}>Refresh</button>
         <TableSearchForm className={contentStyle.tableSearchForm}
           changeFilter={(action, content = state.content) => {
-            setState({ ...state, action: action, content: content.trim() });
+            setState({ ...state, action: action, content: content.trim().toLowerCase() });
           }} />
       </div>
       <Table data={state.data.filter((device) => {
-        return (device.action === state.action || state.action === "All") && device.name.includes(state.content);
+        return (device.action === state.action || state.action === "All") && device.name.toLowerCase().includes(state.content);
       })} attributes={state.attributes} columns={state.columns} />
     </div>
   </div>;

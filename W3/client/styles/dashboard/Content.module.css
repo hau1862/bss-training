@@ -59,6 +59,10 @@
 }
 
 @media screen and (max-width: 768px) {
+  .content {
+    padding: 60px 0px 0px;
+  }
+
   .tableContainer {
     display: none;
   }

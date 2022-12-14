@@ -2,8 +2,6 @@
   position: absolute;
   top: 20px;
   right: 20px;
-  transition-timing-function: linear;
-  transition-duration: 1s;
   border-radius: 16px;
   padding: 12px 20px;
   display: flex;
