@@ -1,73 +1,31 @@
-import { GraphqlQueryError } from "@shopify/shopify-api";
 import shopify from "./shopify.js";
+import {
+  readData,
+  writeData,
+  appendData,
+  productPath,
+  discountPath,
+} from "./data/index.js";
 
-const ADJECTIVES = [
-  "autumn",
-  "hidden",
-  "bitter",
-  "misty",
-  "silent",
-  "empty",
-  "dry",
-  "dark",
-  "summer",
-  "icy",
-  "delicate",
-  "quiet",
-  "white",
-  "cool",
-  "spring",
-  "winter",
-  "patient",
-  "twilight",
-  "dawn",
-  "crimson",
-  "wispy",
-  "weathered",
-  "blue",
-  "billowing",
-  "broken",
-  "cold",
-  "damp",
-  "falling",
-  "frosty",
-  "green",
-  "long",
-];
+const GET_ALL_PRODUCT = `
+  query GetAllProduct($first: Number!) {
+    products(first: $first) {
+      nodes {
+        id
+        title
+      }
+    }
+  }
+`;
 
-const NOUNS = [
-  "waterfall",
-  "river",
-  "breeze",
-  "moon",
-  "rain",
-  "wind",
-  "sea",
-  "morning",
-  "snow",
-  "lake",
-  "sunset",
-  "pine",
-  "shadow",
-  "leaf",
-  "dawn",
-  "glitter",
-  "forest",
-  "hill",
-  "cloud",
-  "meadow",
-  "sun",
-  "glade",
-  "bird",
-  "brook",
-  "butterfly",
-  "bush",
-  "dew",
-  "dust",
-  "field",
-  "fire",
-  "flower",
-];
+export default function applyApiEndpoint(app) {
+  app.get("/api/products/count", async (_req, res) => {
+    const countData = await shopify.api.rest.Product.count({
+      session: res.locals.shopify.session,
+    });
+    res.status(200).send(countData);
+  });
+}
 
 export const DEFAULT_PRODUCTS_COUNT = 5;
 const CREATE_PRODUCTS_MUTATION = `
@@ -80,10 +38,7 @@ const CREATE_PRODUCTS_MUTATION = `
   }
 `;
 
-export default async function productCreator(
-  session,
-  count = DEFAULT_PRODUCTS_COUNT
-) {
+async function productCreator(session, count = DEFAULT_PRODUCTS_COUNT) {
   const client = new shopify.api.clients.Graphql({ session });
 
   try {
