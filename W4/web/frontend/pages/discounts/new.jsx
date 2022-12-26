@@ -5,7 +5,12 @@ export default function NewDiscount() {
   const breadcrumbs = [{ content: "Discounts", url: "/" }];
   return (
     <Frame>
-      <Page title="New Pricing Rule" divider breadcrumbs={breadcrumbs}>
+      <Page
+        title="New Pricing Rule"
+        divider
+        breadcrumbs={breadcrumbs}
+        fullWidth
+      >
         <Stack>
           <Stack.Item fill>
             <DiscountForm />

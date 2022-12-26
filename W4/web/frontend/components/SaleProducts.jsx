@@ -6,7 +6,12 @@ export function SaleProducts(props) {
   if (saleProducts.length > 0) {
     const rows = saleProducts.map((product) => {
       const media = <Thumbnail source={product.image} alt={product.title} />;
-      return [media, product.title, product.price, product.currentPrice];
+      return [
+        media,
+        product.title,
+        product.price + " " + product.currency,
+        product.currentPrice + " " + product.currency,
+      ];
     });
 
     return (

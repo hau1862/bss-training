@@ -1,5 +1,5 @@
 import { Layout, Form, Button } from "@shopify/polaris";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { validateData } from "../commons/validates";
 import { GeneralInformation, ApplyProduct, CustomPrice } from "./discount-form";
 import { defaultData } from "../commons/data";
@@ -10,6 +10,7 @@ export function DiscountForm(props) {
   const navigate = useNavigate();
   const { getCurrentData, setCurrentData } = useContext(DiscountContext);
   const oldData = { ...defaultData, ...props.data };
+  const [submit, setSubmit] = useState(false);
 
   useEffect(() => {
     setCurrentData(oldData);
@@ -22,6 +23,7 @@ export function DiscountForm(props) {
 
   async function handleSubmitForm(event) {
     event.preventDefault();
+    setSubmit(true);
 
     const currentData = getCurrentData();
     if (isDataChanged() && validateData(currentData)) {
@@ -34,7 +36,7 @@ export function DiscountForm(props) {
       navigate("/");
     } else {
       event.target.reset();
-      setCurrentData(oldData);
+      setCurrentData(currentData);
     }
   }
 
@@ -42,7 +44,7 @@ export function DiscountForm(props) {
     <Layout>
       <Layout.Section>
         <Form onSubmit={handleSubmitForm}>
-          <GeneralInformation />
+          <GeneralInformation submit={submit} />
           <ApplyProduct />
           <CustomPrice />
           <div

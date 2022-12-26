@@ -1,5 +1,5 @@
 import { Card, ChoiceList, FormLayout, InlineError } from "@shopify/polaris";
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import { DiscountContext } from "../../Discount";
 import { applyOptions } from "../../commons/data";
 import { validateApply } from "../../commons/validates";
@@ -10,9 +10,7 @@ import ProductSelectionModal from "./ProductSelectionModal";
 
 export function ApplyProduct(props) {
   const { apply, setApply, setModalActive } = useContext(DiscountContext);
-  const [validState, setValidState] = useState({
-    apply: true,
-  });
+
   const options = applyOptions.map((item) => {
     switch (item.value) {
       case "product": {
@@ -52,17 +50,16 @@ export function ApplyProduct(props) {
         <ChoiceList
           choices={options}
           selected={[apply]}
-          error={!validState.apply}
+          error={!validateApply(apply)}
           id="apply"
           onChange={(array) => {
             const value = array[0];
             setApply(value);
             setModalActive(value === "product");
-            setValidState({ ...validState, apply: validateApply(value) });
           }}
         />
         <InlineError
-          message={!validState.apply ? "Apply value is wrong" : ""}
+          message={!validateApply(apply) ? "Apply value is wrong" : ""}
           fieldId="apply"
         />
       </FormLayout>
