@@ -5,7 +5,7 @@ import {
   InlineError,
   Select,
 } from "@shopify/polaris";
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import { statusOptions } from "../../commons/data";
 import {
   validateName,
@@ -17,11 +17,8 @@ import { DiscountContext } from "../../Discount";
 export function GeneralInformation(props) {
   const { name, priority, status, setName, setPriority, setStatus } =
     useContext(DiscountContext);
-  const [validState, setValidState] = useState({
-    name: true,
-    priority: true,
-    status: true,
-  });
+
+  const validName = !props.submit && name === "" ? true : validateName(name);
 
   return (
     <Card title="General Information" sectioned>
@@ -32,12 +29,11 @@ export function GeneralInformation(props) {
           id="name"
           onChange={(value) => {
             setName(value);
-            setValidState({ ...validState, name: validateName(value) });
           }}
-          error={!validState.name}
+          error={!validName}
         />
         <InlineError
-          message={!validState.name ? "Name is required" : ""}
+          message={!validName ? "Name is required" : ""}
           fieldId="name"
         />
         <TextField
@@ -45,23 +41,19 @@ export function GeneralInformation(props) {
           value={priority}
           type="number"
           id="priority"
-          error={!validState.priority}
+          error={!validatePriority(priority)}
           onChange={(value) => {
             setPriority(Number(value));
-            setValidState({
-              ...validState,
-              priority: validatePriority(Number(value)),
-            });
           }}
           helpText={
-            validState.priority
+            validatePriority(priority)
               ? "Please enter an integer from 0 to 99 is the highest priority"
               : ""
           }
         />
         <InlineError
           message={
-            !validState.priority
+            !validatePriority(priority)
               ? "Priority is more than 0 and less than 99"
               : ""
           }
@@ -73,13 +65,14 @@ export function GeneralInformation(props) {
           options={statusOptions}
           onChange={(value) => {
             setStatus(value);
-            setValidState({ ...validState, status: validateStatus(value) });
           }}
           id="status"
-          error={!validState.status}
+          error={!validateStatus(status)}
         />
         <InlineError
-          message={!validState.status ? "Status must be enable or disable" : ""}
+          message={
+            !validateStatus(status) ? "Status must be enable or disable" : ""
+          }
           fieldId="status"
         />
       </FormLayout>

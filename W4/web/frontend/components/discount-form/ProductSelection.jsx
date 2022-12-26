@@ -1,9 +1,14 @@
-import { ResourceList, Thumbnail, ResourceItem } from "@shopify/polaris";
+import {
+  ResourceList,
+  Thumbnail,
+  ResourceItem,
+  Filters,
+} from "@shopify/polaris";
 import { useContext } from "react";
 import { DiscountContext } from "../../Discount";
 
 export default function ProductSelection(props) {
-  const { products, productIds } = useContext(DiscountContext);
+  const { products, productIds, setModalActive } = useContext(DiscountContext);
 
   const resourceName = {
     singular: "product",
@@ -15,18 +20,33 @@ export default function ProductSelection(props) {
     const media = <Thumbnail source={image} alt={title} />;
 
     return (
-      <ResourceItem id={id} url={`/product/${id}`} media={media}>
+      <ResourceItem id={id} media={media}>
         <div>{title}</div>
       </ResourceItem>
     );
   }
 
+  const items =
+    productIds?.length > 0
+      ? products.filter((product) => {
+          return productIds.includes(product.id);
+        })
+      : [];
+
   return (
     <ResourceList
       resourceName={resourceName}
-      items={products.filter((product) => {
-        return productIds.includes(product.id);
-      })}
+      filterControl={
+        <Filters
+          queryValue={""}
+          filters={[]}
+          appliedFilters={[]}
+          onQueryFocus={() => {
+            setModalActive(true);
+          }}
+        />
+      }
+      items={items}
       renderItem={renderItem}
     />
   );

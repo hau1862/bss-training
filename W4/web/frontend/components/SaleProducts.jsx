@@ -6,7 +6,18 @@ export function SaleProducts(props) {
   if (saleProducts.length > 0) {
     const rows = saleProducts.map((product) => {
       const media = <Thumbnail source={product.image} alt={product.title} />;
-      return [media, product.title, product.price, product.currentPrice];
+      return [
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          {media} <div style={{ marginLeft: "20px" }}>{product.title}</div>
+        </div>,
+        product.price + " " + product.currency,
+        product.currentPrice + " " + product.currency,
+      ];
     });
 
     return (
@@ -14,7 +25,7 @@ export function SaleProducts(props) {
         <div className="table-container">
           <DataTable
             columnContentTypes={["text", "text", "text", "text"]}
-            headings={["", "Title", "Price", "Sale Price"]}
+            headings={["Product", "Price", "Sale Price"]}
             rows={rows}
           />
         </div>

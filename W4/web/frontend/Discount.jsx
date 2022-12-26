@@ -12,11 +12,11 @@ function mapProductDataFromResponse(response) {
       images: {
         nodes: [{ url: image }],
       },
-      variants: {
-        nodes: [{ price }],
+      priceRange: {
+        maxVariantPrice: { amount: price, currencyCode: currency },
       },
     }) => {
-      return { id, title, tags, image, price };
+      return { id, title, tags, image, price, currency };
     }
   );
 }

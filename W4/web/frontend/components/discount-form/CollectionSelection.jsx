@@ -74,7 +74,7 @@ export default function CollectionSelection(props) {
   const textField = (
     <Autocomplete.TextField
       onChange={updateText}
-      label="Tags"
+      label="Collections"
       value={inputValue}
       placeholder="Vintage, cotton, summer"
     />

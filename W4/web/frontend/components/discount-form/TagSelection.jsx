@@ -1,9 +1,10 @@
-import { Autocomplete, Tag, Stack } from "@shopify/polaris";
+import { Autocomplete, Tag, Stack, TextField } from "@shopify/polaris";
 import { useState, useContext, useCallback } from "react";
 import { DiscountContext } from "../../Discount";
-import { useAppQuery } from "../../hooks";
+import { useAuthenticatedFetch } from "../../hooks";
 
 export default function TagSelection(props) {
+  const fetch = useAuthenticatedFetch();
   const { tags, tagIds, setTagIds } = useContext(DiscountContext);
   const paginationInterval = 5;
   const deselectedOptions = tags.map((tag) => {
@@ -19,7 +20,7 @@ export default function TagSelection(props) {
   const [willLoadMoreResults, setWillLoadMoreResults] = useState(true);
   const [visibleOptionIndex, setVisibleOptionIndex] =
     useState(paginationInterval);
-
+  const [newTag, setNewTag] = useState("");
   const handleLoadMoreResults = useCallback(() => {
     if (willLoadMoreResults) {
       setIsLoading(true);

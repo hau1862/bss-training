@@ -10,7 +10,7 @@ import {
 
 const GET_ALL_PRODUCT = `
   query GetAllProduct {
-    products(first: 10) {
+    products(first: 20) {
       nodes {
         id
         title
@@ -20,9 +20,10 @@ const GET_ALL_PRODUCT = `
             url
           }
         }
-        variants(first: 1) {
-          nodes {
-            price
+        priceRange {
+          maxVariantPrice {
+            amount
+            currencyCode
           }
         }
       }
@@ -32,16 +33,39 @@ const GET_ALL_PRODUCT = `
 
 const GET_ALL_COLLECTION = `
   query GetAllCollection {
-    collections(first: 10) {
+    collections(first: 20) {
       nodes {
         id
         title
         image {
           src
         }
-        products(first: 10) {
+        products(first: 20) {
           nodes {
             id
+          }
+        }
+      }
+    }
+  }
+`;
+
+const GET_PRODUCT_WITH_FILTER = `
+  query GetProductWithTitle($filter: String!) {
+    products(first: 20, query: $filter) {
+      nodes {
+        id
+        title
+        tags
+        images(first: 1) {
+          nodes {
+            url
+          }
+        }
+        priceRange {
+          maxVariantPrice {
+            amount
+            currencyCode
           }
         }
       }
@@ -72,6 +96,29 @@ export default function applyApiEndpoint(app) {
     const data = await client.query({
       data: {
         query: GET_ALL_COLLECTION,
+      },
+    });
+
+    res.status(200).json(data);
+  });
+
+  app.post("/api/products/filter", async (req, res) => {
+    const client = new shopify.api.clients.Graphql({
+      session: res.locals.shopify.session,
+    });
+
+    const filterData = req.body;
+    let filter = "";
+    for (const key in filterData) {
+      filter += `${key}: ${filterData[key]}`;
+    }
+
+    const data = await client.query({
+      data: {
+        query: GET_PRODUCT_WITH_FILTER,
+        variables: {
+          filter: filter,
+        },
       },
     });
 
