@@ -1,4 +1,5 @@
 import shopify from "./shopify.js";
+
 import {
   readData,
   writeData,
@@ -8,70 +9,72 @@ import {
 } from "./data/index.js";
 
 const GET_ALL_PRODUCT = `
-  query GetAllProduct($first: Number!) {
-    products(first: $first) {
+  query GetAllProduct {
+    products(first: 10) {
       nodes {
         id
         title
+        tags
+        images(first: 1) {
+          nodes {
+            url
+          }
+        }
+        variants(first: 1) {
+          nodes {
+            price
+          }
+        }
+      }
+    }
+  }
+`;
+
+const GET_ALL_COLLECTION = `
+  query GetAllCollection {
+    collections(first: 10) {
+      nodes {
+        id
+        title
+        image {
+          src
+        }
+        products(first: 10) {
+          nodes {
+            id
+          }
+        }
       }
     }
   }
 `;
 
 export default function applyApiEndpoint(app) {
-  app.get("/api/products/count", async (_req, res) => {
-    const countData = await shopify.api.rest.Product.count({
+  app.get("/api/products/all", async (_req, res) => {
+    const client = new shopify.api.clients.Graphql({
       session: res.locals.shopify.session,
     });
-    res.status(200).send(countData);
+
+    const data = await client.query({
+      data: {
+        query: GET_ALL_PRODUCT,
+      },
+    });
+
+    res.status(200).json(data);
   });
-}
 
-export const DEFAULT_PRODUCTS_COUNT = 5;
-const CREATE_PRODUCTS_MUTATION = `
-  mutation populateProduct($input: ProductInput!) {
-    productCreate(input: $input) {
-      product {
-        id
-      }
-    }
-  }
-`;
+  app.get("/api/collections/all", async (_req, res) => {
+    const client = new shopify.api.clients.Graphql({
+      session: res.locals.shopify.session,
+    });
 
-async function productCreator(session, count = DEFAULT_PRODUCTS_COUNT) {
-  const client = new shopify.api.clients.Graphql({ session });
+    const data = await client.query({
+      data: {
+        query: GET_ALL_COLLECTION,
+      },
+    });
 
-  try {
-    for (let i = 0; i < count; i++) {
-      await client.query({
-        data: {
-          query: CREATE_PRODUCTS_MUTATION,
-          variables: {
-            input: {
-              title: `${randomTitle()}`,
-              variants: [{ price: randomPrice() }],
-            },
-          },
-        },
-      });
-    }
-  } catch (error) {
-    if (error instanceof GraphqlQueryError) {
-      throw new Error(
-        `${error.message}\n${JSON.stringify(error.response, null, 2)}`
-      );
-    } else {
-      throw error;
-    }
-  }
-}
-
-function randomTitle() {
-  const adjective = ADJECTIVES[Math.floor(Math.random() * ADJECTIVES.length)];
-  const noun = NOUNS[Math.floor(Math.random() * NOUNS.length)];
-  return `${adjective} ${noun}`;
-}
-
-function randomPrice() {
-  return Math.round((Math.random() * 10 + Number.EPSILON) * 100) / 100;
+    res.status(200).json(data);
+  });
 }
